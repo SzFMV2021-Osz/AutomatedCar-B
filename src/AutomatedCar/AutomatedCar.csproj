@@ -4,7 +4,6 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Compile Update="**\*.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
@@ -28,5 +27,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="GeoLibrary" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SystemComponents\Packets\" />
   </ItemGroup>
 </Project>
