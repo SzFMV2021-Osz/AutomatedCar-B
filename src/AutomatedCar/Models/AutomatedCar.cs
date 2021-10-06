@@ -1,7 +1,8 @@
 namespace AutomatedCar.Models
 {
     using Avalonia.Media;
-    using SystemComponents;
+    using global::AutomatedCar.SystemComponents;
+    using global::AutomatedCar.SystemComponents.Behaviour;
 
     public class AutomatedCar : Car
     {
@@ -11,22 +12,34 @@ namespace AutomatedCar.Models
             : base(x, y, filename)
         {
             this.virtualFunctionBus = new VirtualFunctionBus();
+            this.Gearbox = new AutomaticGearbox(this.virtualFunctionBus);
             this.ZIndex = 10;
         }
 
         public VirtualFunctionBus VirtualFunctionBus { get => this.virtualFunctionBus; }
 
+        /// <summary>
+        /// Gets the automated car's gearbox.
+        /// </summary>
+        public IGearbox Gearbox { get; }
+
         public int Revolution { get; set; }
+
         public int Velocity { get; set; }
+
         public Geometry Geometry { get; set; }
 
-        /// <summary>Starts the automated cor by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
+        /// <summary>
+        /// Starts the automated car by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.
+        /// </summary>
         public void Start()
         {
             this.virtualFunctionBus.Start();
         }
 
-        /// <summary>Stops the automated cor by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
+        /// <summary>
+        /// Stops the automated car by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.
+        /// </summary>
         public void Stop()
         {
             this.virtualFunctionBus.Stop();
