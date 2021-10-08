@@ -21,12 +21,17 @@ namespace AutomatedCar
         {
             if (Keyboard.IsKeyDown(Key.Up))
             {
-                this.world.ControlledCar.Y -= 5;
+                //this.world.ControlledCar.Y -= 5;
+            }
+
+            if (!Keyboard.IsKeyDown(Key.Up))
+            {
+                //this.world.ControlledCar.UnleashGas();
             }
 
             if (Keyboard.IsKeyDown(Key.Down))
             {
-                this.world.ControlledCar.Y += 5;
+                this.world.ControlledCar.IncreaseBrake();
             }
 
             if (Keyboard.IsKeyDown(Key.Left))

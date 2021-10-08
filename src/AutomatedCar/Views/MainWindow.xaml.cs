@@ -21,12 +21,15 @@ namespace AutomatedCar.Views
             base.OnKeyDown(e);
             if (Keyboard.IsKeyDown(Key.Up))
             {
-                World.Instance.ControlledCar.Y -= 5;
+                //World.Instance.ControlledCar.Y -= 5;
+                World.Instance.ControlledCar.IncreaseGas();
             }
 
             if (Keyboard.IsKeyDown(Key.Down))
             {
-                World.Instance.ControlledCar.Y += 5;
+                //World.Instance.ControlledCar.Y += 5;
+                World.Instance.ControlledCar.IncreaseBrake();
+
             }
 
             if (Keyboard.IsKeyDown(Key.Left))
