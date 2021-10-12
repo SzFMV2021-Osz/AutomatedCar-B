@@ -31,12 +31,12 @@ namespace AutomatedCar
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
-                this.world.ControlledCar.X -= 5;
+                World.Instance.ControlledCar.RotateSteeringWheelLeft();
             }
 
             if (Keyboard.IsKeyDown(Key.Right))
             {
-                this.world.ControlledCar.X += 5;
+                World.Instance.ControlledCar.RotateSteeringWheelRight();
             }
 
             if (Keyboard.IsKeyDown(Key.PageUp))
