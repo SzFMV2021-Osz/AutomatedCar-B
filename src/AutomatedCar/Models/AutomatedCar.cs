@@ -27,8 +27,6 @@ namespace AutomatedCar.Models
 
         public DummySensor dummysensor { get; set; }
 
-        public double Speed { get; set; }
-
         private const double Net = 0.8;
 
         public Vector Acceleration { get; set; }
@@ -80,26 +78,12 @@ namespace AutomatedCar.Models
 
         public void IncreaseGas()
         {
-            if (GasPosition <= Max_Pedal)
-            {
-                GasPosition += 1;
-            }
-            else
-            {
-                GasPosition = 100;
-            }
+            GasPosition = Math.Min(GasPosition + 1, Max_Pedal);
         }
 
         public void IncreaseBrake()
         {
-            if (BrakePosition <= Max_Pedal)
-            {
-                BrakePosition += 1;
-            }
-            else
-            {
-                BrakePosition = 100;
-            }
+            BrakePosition = Math.Min(BrakePosition + 1, Max_Pedal);
         }
         public void CalculateSpeed()
         {

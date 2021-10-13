@@ -22,9 +22,9 @@ namespace AutomatedCar
             if (Keyboard.IsKeyDown(Key.Up))
             {
                 //this.world.ControlledCar.Y -= 5;
+                World.Instance.ControlledCar.IncreaseGas();
             }
-
-            if (!Keyboard.IsKeyDown(Key.Up))
+            else
             {
                 //this.world.ControlledCar.UnleashGas();
             }
