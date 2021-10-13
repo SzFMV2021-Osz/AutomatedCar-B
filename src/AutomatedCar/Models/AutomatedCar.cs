@@ -25,8 +25,6 @@ namespace AutomatedCar.Models
 
         const int Max_Pedal = 100;
 
-        public DummySensor dummysensor { get; set; }
-
         public double Speed { get; set; }
 
         private const double Net = 0.8;
@@ -58,8 +56,6 @@ namespace AutomatedCar.Models
             : base(x, y, filename)
         {
             this.virtualFunctionBus = new VirtualFunctionBus();
-            this.dummysensor = new DummySensor(this.VirtualFunctionBus);
-            this.VirtualFunctionBus.RegisterComponent(this.dummysensor);
             this.ZIndex = 10;
             this.GasPosition = 0;
             this.BrakePosition = 0;
