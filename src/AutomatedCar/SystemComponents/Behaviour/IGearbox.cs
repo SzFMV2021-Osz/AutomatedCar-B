@@ -1,4 +1,8 @@
-﻿namespace AutomatedCar.SystemComponents.Behaviour
+﻿// <copyright file="IGearbox.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace AutomatedCar.SystemComponents.Behaviour
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +18,7 @@
         /// <summary>
         /// Gets or sets the current gear.
         /// </summary>
-        Gear CurrentGear { get; set; }
+        Gear Gear { get; set; }
 
         /// <summary>
         /// Gets or sets the gear in drive mode.
