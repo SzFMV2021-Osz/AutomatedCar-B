@@ -16,7 +16,7 @@
         public void TestCarInParkByDefault()
         {
             AutomatedCar car = new AutomatedCar(0, 0, "");
-            Assert.That(car.Gearbox.CurrentGear, Is.EqualTo(Gear.Park));
+            Assert.That(car.Gearbox.Gear, Is.EqualTo(Gear.Park));
         }
 
         [TestCase]
@@ -32,9 +32,9 @@
         public void TestGearshiftUp(Gear origGear, Gear expectedGear)
         {
             AutomatedCar car = new AutomatedCar(0, 0, "");
-            car.Gearbox.CurrentGear = origGear;
+            car.Gearbox.Gear = origGear;
             car.Gearbox.ShiftUp();
-            Assert.That(car.Gearbox.CurrentGear, Is.EqualTo(expectedGear));
+            Assert.That(car.Gearbox.Gear, Is.EqualTo(expectedGear));
         }
 
         [TestCase(0)]
@@ -44,10 +44,10 @@
         public void TestShiftUpInDrive(int origSubgear)
         {
             AutomatedCar car = new AutomatedCar(0, 0, "");
-            car.Gearbox.CurrentGear = Gear.Drive;
+            car.Gearbox.Gear = Gear.Drive;
             car.Gearbox.DriveSubgear = origSubgear;
             car.Gearbox.ShiftUp();
-            Assert.That(car.Gearbox.CurrentGear, Is.EqualTo(Gear.Drive));
+            Assert.That(car.Gearbox.Gear, Is.EqualTo(Gear.Drive));
             Assert.That(car.Gearbox.DriveSubgear, Is.EqualTo(origSubgear + 1));
         }
 
@@ -69,9 +69,9 @@
         public void TestGearshiftDown(Gear origGear, Gear expectedGear)
         {
             AutomatedCar car = new AutomatedCar(0, 0, "");
-            car.Gearbox.CurrentGear = origGear;
+            car.Gearbox.Gear = origGear;
             car.Gearbox.ShiftDown();
-            Assert.That(car.Gearbox.CurrentGear, Is.EqualTo(expectedGear));
+            Assert.That(car.Gearbox.Gear, Is.EqualTo(expectedGear));
         }
 
         [TestCase]

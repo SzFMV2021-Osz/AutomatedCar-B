@@ -1,4 +1,8 @@
-﻿namespace AutomatedCar.SystemComponents.Behaviour
+﻿// <copyright file="Gear.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace AutomatedCar.SystemComponents.Behaviour
 {
     using System;
     using System.Collections.Generic;
