@@ -1,17 +1,20 @@
 namespace AutomatedCar.Models
 {
     using Avalonia.Media;
+    using global::AutomatedCar.SystemComponents.PowertrainComponents;
     using SystemComponents;
 
     public class AutomatedCar : Car
     {
         private VirtualFunctionBus virtualFunctionBus;
+        private EngineComponent engineComponent;
 
         public AutomatedCar(int x, int y, string filename)
             : base(x, y, filename)
         {
             this.virtualFunctionBus = new VirtualFunctionBus();
             this.ZIndex = 10;
+            this.engineComponent = new EngineComponent(virtualFunctionBus);
         }
 
         public VirtualFunctionBus VirtualFunctionBus { get => this.virtualFunctionBus; }
