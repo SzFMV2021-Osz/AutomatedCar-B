@@ -14,7 +14,7 @@ namespace AutomatedCar.SystemComponents.Packets
     /// <summary>
     /// The packed used by the gearbox.
     /// </summary>
-    public class GearboxPacket : IGearboxPacket
+    public class GearboxPacket : IReadonlyGearboxPacket
     {
         /// <inheritdoc/>
         public double Torque { get; set; }
