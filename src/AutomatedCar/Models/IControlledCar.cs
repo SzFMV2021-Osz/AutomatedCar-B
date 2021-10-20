@@ -8,8 +8,6 @@
 
     interface IControlledCar
     {
-        public int GasPosition { get; set; }
 
-        public int BrakePosition { get; set; }
     }
 }

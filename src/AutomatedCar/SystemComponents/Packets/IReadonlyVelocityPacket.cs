@@ -6,8 +6,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IReadonlyVelocityPacket
+    public interface IReadonlyPedalPacket
     {
-        double Velocity { get; }
+        public int GasPedal { get; }
+
+        public int BrakePedal { get; }
     }
 }

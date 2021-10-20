@@ -1,5 +1,6 @@
 namespace AutomatedCar.SystemComponents
 {
+    using AutomatedCar.Models;
     using System.Collections.Generic;
     using SystemComponents.Packets;
 
@@ -7,9 +8,15 @@ namespace AutomatedCar.SystemComponents
     {
         private List<SystemComponent> components = new List<SystemComponent>();
 
-        public IReadOnlyDummyPacket DummyPacket { get; set; }
+        public IReadonlyPedalPacket ReadonlyPedalPacket;
+        public IReadonlyVelocityPacket ReadonlyVelocityPacket;
 
-        public IReadonlyPedalPacket readonlyPedalPacket;
+        public WorldObject Owner { get; }
+
+        public VirtualFunctionBus(WorldObject owner)
+        {
+            this.Owner = owner;
+        }
 
         public void RegisterComponent(SystemComponent component)
         {
