@@ -19,6 +19,7 @@ namespace AutomatedCar.Views
         {
             Keyboard.Keys.Add(e.Key);
             base.OnKeyDown(e);
+            /*
             if (Keyboard.IsKeyDown(Key.Up))
             {
                 World.Instance.ControlledCar.Y -= 5;
@@ -28,6 +29,7 @@ namespace AutomatedCar.Views
             {
                 World.Instance.ControlledCar.Y += 5;
             }
+            */
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
