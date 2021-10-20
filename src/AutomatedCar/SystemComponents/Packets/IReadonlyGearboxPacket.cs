@@ -14,21 +14,21 @@ namespace AutomatedCar.SystemComponents.Packets
     /// <summary>
     /// A packet updated by the gearbox each run.
     /// </summary>
-    public interface IGearboxPacket
+    public interface IReadonlyGearboxPacket
     {
         /// <summary>
-        /// Gets or sets the torque applied by the motor and the current gear.
+        /// Gets the torque applied by the motor and the current gear.
         /// </summary>
-        double Torque { get; set; }
+        double Torque { get; }
 
         /// <summary>
-        /// Gets or sets the subgear in drive mode.
+        /// Gets the subgear in drive mode.
         /// </summary>
-        public int DriveSubgear { get; set; }
+        public int DriveSubgear { get; }
 
         /// <summary>
-        /// Gets or sets the gearbox's current gear.
+        /// Gets the gearbox's current gear.
         /// </summary>
-        public Gear Gear { get; set; }
+        public Gear Gear { get; }
     }
 }

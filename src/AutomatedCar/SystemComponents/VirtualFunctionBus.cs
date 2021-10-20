@@ -7,7 +7,7 @@ namespace AutomatedCar.SystemComponents
     {
         private List<SystemComponent> components = new List<SystemComponent>();
 
-        public IGearboxPacket GearboxPacket;
+        public IReadonlyGearboxPacket GearboxPacket;
 
         public void RegisterComponent(SystemComponent component)
         {

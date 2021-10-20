@@ -32,6 +32,8 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public const int MinMotorRevolution = 100;
 
+        private GearboxPacket gearboxPacket;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AutomaticGearbox"/> class.
         /// </summary>
@@ -41,7 +43,8 @@ namespace AutomatedCar.SystemComponents.Behaviour
         {
             this.Gear = Gear.Park;
             this.DriveSubgear = 0;
-            virtualFunctionBus.GearboxPacket = new GearboxPacket();
+            this.gearboxPacket = new GearboxPacket();
+            virtualFunctionBus.GearboxPacket = this.gearboxPacket;
         }
 
         /// <inheritdoc/>
@@ -76,9 +79,9 @@ namespace AutomatedCar.SystemComponents.Behaviour
         public override void Process()
         {
             this.HandleAutomaticGearshift();
-            this.virtualFunctionBus.GearboxPacket.Torque = this.GetGearboxTorgue();
-            this.virtualFunctionBus.GearboxPacket.Gear = this.Gear;
-            this.virtualFunctionBus.GearboxPacket.DriveSubgear = this.DriveSubgear;
+            this.gearboxPacket.Torque = this.GetGearboxTorgue();
+            this.gearboxPacket.Gear = this.Gear;
+            this.gearboxPacket.DriveSubgear = this.DriveSubgear;
         }
 
         /// <summary>
