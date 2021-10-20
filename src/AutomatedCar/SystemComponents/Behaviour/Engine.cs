@@ -2,15 +2,16 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace AutomatedCar.SystemComponents.PowertrainComponents
+namespace AutomatedCar.SystemComponents.Behaviour
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using AutomatedCar.SystemComponents.Packets;
 
-    class EngineComponent
+    public class Engine : SystemComponent
     {
         private const int MaxRPM = 7000; // Maximálisan megengedett fordulatszám
         private const int BaseRPM = 500; // Naggyáboli alapjárati érték
@@ -18,14 +19,19 @@ namespace AutomatedCar.SystemComponents.PowertrainComponents
         private double gasPedalValue; // Gázpedál állásának tárolása
         private double breakPedalValue; // Fékpedál állásának tárolása
 
-        protected VirtualFunctionBus virtualFunctionBus;
+        private EnginePacket enginePacket;
 
-        public int engineRPM { get; private set; }
-
-        public EngineComponent(VirtualFunctionBus virtualFunctionBus)
+        public Engine(VirtualFunctionBus virtualFunctionBus)
+            : base(virtualFunctionBus)
         {
-            this.engineRPM = BaseRPM;
-            this.virtualFunctionBus = virtualFunctionBus;
+            //this.gasPedalValue = 
+            this.enginePacket = new EnginePacket();
+            virtualFunctionBus.ReadonlyEnginePacket = this.enginePacket;
+        }
+
+        public override void Process()
+        {
+            throw new NotImplementedException();
         }
     }
 }
