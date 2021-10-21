@@ -75,7 +75,7 @@
         }
 
         [TestCase]
-        public void TestShiftUpStaysAboveZero()
+        public void TestShiftDownStaysAboveZero()
         {
             AutomatedCar car = new AutomatedCar(0, 0, "");
 
