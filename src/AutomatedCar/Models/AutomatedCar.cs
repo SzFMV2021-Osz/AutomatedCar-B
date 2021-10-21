@@ -11,9 +11,7 @@ namespace AutomatedCar.Models
 
     public class AutomatedCar : Car
     {
-        private VirtualFunctionBus virtualFunctionBus;
-
-        public VirtualFunctionBus VirtualFunctionBus { get => this.virtualFunctionBus; }
+        public VirtualFunctionBus VirtualFunctionBus { get; }
 
         public int Revolution { get; set; }
 
