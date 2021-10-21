@@ -2,21 +2,19 @@
 {
     using ReactiveUI;
 
-    public class PedalPacket : ReactiveObject, IReadonlyPedalPacket
+    /// <summary>
+    /// The packet sent by pedals.
+    /// </summary>
+    public class PedalPacket : IReadonlyPedalPacket
     {
-        private int gaspedal;
-        private int brakePedal;
+        /// <summary>
+        /// Gets or sets the brake pedal's position (%).
+        /// </summary>
+        public int BrakePedal { get; set; }
 
-        public int BrakePedal
-        {
-            get => this.brakePedal;
-            set => this.RaiseAndSetIfChanged( ref this.brakePedal, value);
-        }
-
-        public int GasPedal
-        {
-            get => this.gaspedal;
-            set => this.RaiseAndSetIfChanged(ref this.gaspedal, value);
-        }
+        /// <summary>
+        /// Gets or sets the gas pedal's position (%).
+        /// </summary>
+        public int GasPedal { get; set; }
     }
 }

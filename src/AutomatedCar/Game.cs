@@ -21,20 +21,20 @@ namespace AutomatedCar
         {
             if (Keyboard.IsKeyDown(Key.Up))
             {
-                World.Instance.ControlledCar.Pedals.Gas.Increase();
+                World.Instance.ControlledCar.Pedals.Gas.Increase(3);
             }
             else
             {
-                World.Instance.ControlledCar.Pedals.Gas.Decrease();
+                World.Instance.ControlledCar.Pedals.Gas.Decrease(4);
             }
 
             if (Keyboard.IsKeyDown(Key.Down))
             {
-                this.world.ControlledCar.Pedals.Break.Increase();
+                World.Instance.ControlledCar.Pedals.Brake.Increase(3);
             }
             else
             {
-                World.Instance.ControlledCar.Pedals.Break.Decrease();
+                World.Instance.ControlledCar.Pedals.Brake.Decrease(4);
             }
 
 

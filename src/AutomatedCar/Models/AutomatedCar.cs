@@ -9,7 +9,7 @@ namespace AutomatedCar.Models
     using global::AutomatedCar.SystemComponents.Packets;
     using ReactiveUI;
 
-    public class AutomatedCar : Car, IControlledCar
+    public class AutomatedCar : Car
     {
         private VirtualFunctionBus virtualFunctionBus;
 
@@ -19,8 +19,14 @@ namespace AutomatedCar.Models
 
         public Geometry Geometry { get; set; }
 
+        /// <summary>
+        /// Gets the busines loggic behind the car's pedals.
+        /// </summary>
         public Pedals Pedals { get; }
 
+        /// <summary>
+        /// Gets the busines logic of the car's movement.
+        /// </summary>
         public VelocityVectorCalculator VelocityVectorCalculator { get; }
 
         public AutomatedCar(int x, int y, string filename)

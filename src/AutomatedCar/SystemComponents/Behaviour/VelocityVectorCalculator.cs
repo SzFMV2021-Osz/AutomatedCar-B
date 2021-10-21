@@ -32,7 +32,7 @@
         public double CalculateVelocity()
         {
             // TODO use other components
-            return this.virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
+            return this.virtualFunctionBus.ReadonlyPedalPacket.GasPedal * 0.2;
         }
 
         /// <inheritdoc/>
@@ -42,7 +42,6 @@
 
             // TODO this is stupid
             ((Models.AutomatedCar)this.virtualFunctionBus.Owner).Y -= Convert.ToInt32(Math.Round(this.packet.Velocity));
-
         }
     }
 }

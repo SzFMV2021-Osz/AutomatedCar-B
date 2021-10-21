@@ -19,26 +19,6 @@ namespace AutomatedCar.Views
             Keyboard.Keys.Add(e.Key);
             base.OnKeyDown(e);
 
-            /*
-            if (Keyboard.IsKeyDown(Key.Up))
-            {
-                World.Instance.ControlledCar.Pedals.Gas.Increase();
-            }
-            else
-            {
-                World.Instance.ControlledCar.Pedals.Gas.Decrease();
-            }
-
-            if (Keyboard.IsKeyDown(Key.Down))
-            {
-                World.Instance.ControlledCar.Pedals.Break.Increase();
-            }
-            else
-            {
-                World.Instance.ControlledCar.Pedals.Break.Decrease();
-            }
-            */
-
             if (Keyboard.IsKeyDown(Key.Left))
             {
                 World.Instance.ControlledCar.X -= 5;

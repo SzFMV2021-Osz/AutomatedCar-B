@@ -4,12 +4,12 @@
 
 namespace AutomatedCar.SystemComponents.Behaviour
 {
-    using AutomatedCar.SystemComponents.Packets;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using AutomatedCar.SystemComponents.Packets;
 
     /// <summary>
     /// The behaviour of pedals.
@@ -23,11 +23,11 @@ namespace AutomatedCar.SystemComponents.Behaviour
         public Pedals(VirtualFunctionBus virtualFunctionBus)
             : base(virtualFunctionBus)
         {
-            this.pedalPacket = new PedalPacket();
-            virtualFunctionBus.ReadonlyPedalPacket = this.pedalPacket;
+            this.PedalPacket = new PedalPacket();
+            virtualFunctionBus.ReadonlyPedalPacket = this.PedalPacket;
         }
 
-        private PedalPacket pedalPacket {get; }
+        private PedalPacket PedalPacket { get; }
 
         /// <summary>
         /// Gets the gas pedal.
@@ -37,13 +37,13 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// <summary>
         /// Gets the gas pedal.
         /// </summary>
-        public Pedal Break { get; } = new Pedal();
+        public Pedal Brake { get; } = new Pedal();
 
         /// <inheritdoc/>
         public override void Process()
         {
-            this.pedalPacket.BrakePedal = Convert.ToInt32(Math.Round(this.Break.Position / Pedal.MaxPedalPosition * 100));
-            this.pedalPacket.GasPedal = Convert.ToInt32(Math.Round(this.Gas.Position / Pedal.MaxPedalPosition * 100));
+            this.PedalPacket.BrakePedal = Convert.ToInt32(Math.Round(this.Brake.Position / Pedal.MaxPedalPosition * 100));
+            this.PedalPacket.GasPedal = Convert.ToInt32(Math.Round(this.Gas.Position / Pedal.MaxPedalPosition * 100));
         }
 
 
