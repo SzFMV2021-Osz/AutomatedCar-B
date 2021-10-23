@@ -5,6 +5,7 @@ namespace AutomatedCar.ViewModels
     public class DashboardViewModel : ViewModelBase
     {
         private World world;
+
         public DashboardViewModel(World world)
         {
             this.world = world;
@@ -14,6 +15,7 @@ namespace AutomatedCar.ViewModels
         {
             get => this.world.ControlledCar;
         }
+
         public World World
         {
             get => this.world;

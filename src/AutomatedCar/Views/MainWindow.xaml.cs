@@ -10,7 +10,6 @@ namespace AutomatedCar.Views
     {
         public MainWindow()
         {
-
             this.InitializeComponent();
             FocusCar();
         }
@@ -19,6 +18,7 @@ namespace AutomatedCar.Views
         {
             Keyboard.Keys.Add(e.Key);
             base.OnKeyDown(e);
+            /*
             if (Keyboard.IsKeyDown(Key.Up))
             {
                 World.Instance.ControlledCar.Y -= 5;
@@ -31,12 +31,17 @@ namespace AutomatedCar.Views
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
-                World.Instance.ControlledCar.X -= 5;
+                World.Instance.ControlledCar.RotateSteeringWheelLeft();
             }
 
             if (Keyboard.IsKeyDown(Key.Right))
             {
-                World.Instance.ControlledCar.X += 5;
+                World.Instance.ControlledCar.RotateSteeringWheelRight();
+            }
+
+            if (!Keyboard.IsKeyDown(Key.Left) && !Keyboard.IsKeyDown(Key.Right))
+            {
+                World.Instance.ControlledCar.ReleaseSteeringWheel();
             }
 
             if (Keyboard.IsKeyDown(Key.PageUp))
@@ -89,7 +94,7 @@ namespace AutomatedCar.Views
                 World.Instance.PrevControlledCar();
                 Keyboard.Keys.Remove(Key.F5);
             }
-
+            */
             FocusCar();
         }
 

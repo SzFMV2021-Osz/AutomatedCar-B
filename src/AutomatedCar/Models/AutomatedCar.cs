@@ -1,26 +1,33 @@
 namespace AutomatedCar.Models
 {
     using Avalonia.Media;
-    using SystemComponents;
+  using ReactiveUI;
+  using SystemComponents;
 
     public class AutomatedCar : Car
     {
         private static int WHEEL_MIN = -100;
         private static int WHEEL_MAX = 100;
 
-        private VirtualFunctionBus virtualFunctionBus;
+        private int wheel;
 
-        private int wheelPosition;
+        private VirtualFunctionBus virtualFunctionBus;
 
         public AutomatedCar(int x, int y, string filename)
             : base(x, y, filename)
         {
             this.virtualFunctionBus = new VirtualFunctionBus();
             this.ZIndex = 10;
-            this.wheelPosition = 0;
+            this.wheel = 0;
         }
 
         public VirtualFunctionBus VirtualFunctionBus { get => this.virtualFunctionBus; }
+
+        public int wheelPosition
+        {
+            get => this.wheel;
+            set => this.RaiseAndSetIfChanged(ref this.wheel, value);
+        }
 
         public int Revolution { get; set; }
 
@@ -45,7 +52,10 @@ namespace AutomatedCar.Models
         /// </summary>
         public void RotateSteeringWheelLeft()
         {
-            this.wheelPosition = this.wheelPosition - 1 > WHEEL_MIN ? this.wheelPosition-- : this.wheelPosition;
+            if (this.wheelPosition - 1 >= WHEEL_MIN)
+            {
+                this.wheelPosition--;
+            }
         }
 
         /// <summary>
@@ -53,7 +63,26 @@ namespace AutomatedCar.Models
         /// </summary>
         public void RotateSteeringWheelRight()
         {
-            this.wheelPosition = this.wheelPosition + 1 < WHEEL_MAX ? this.wheelPosition++ : this.wheelPosition;
+            if (this.wheelPosition + 1 <= WHEEL_MAX)
+            {
+                this.wheelPosition++;
+            }
+        }
+
+        /// <summary>
+        /// Resets steering wheel to zero position.
+        /// </summary>
+        public void ReleaseSteeringWheel()
+        {
+            if (this.wheelPosition > 0)
+            {
+                this.wheelPosition--;
+            }
+
+            if (this.wheelPosition < 0)
+            {
+                this.wheelPosition++;
+            }
         }
     }
 }
