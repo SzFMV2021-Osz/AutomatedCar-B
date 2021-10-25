@@ -13,25 +13,81 @@ namespace AutomatedCar.SystemComponents.Behaviour
 
     public class Engine : SystemComponent
     {
+        private enum Gear {Park = 0, Reverse = 1, Neutral = 2, Drive = 3}
         private const int MaxRPM = 7000; // Maximálisan megengedett fordulatszám
         private const int BaseRPM = 500; // Naggyáboli alapjárati érték
+        private const double GasPedalScaling = 0.2;
+        private const double BrakePedalScaling = 5;
+        private const int RPMReduction = -50;
 
         private double gasPedalValue; // Gázpedál állásának tárolása
         private double breakPedalValue; // Fékpedál állásának tárolása
-
+        private int RPM;
+        
+        private Gear CurrentGear = Gear.Drive; //TODO: Use Gearbox packet
         private EnginePacket enginePacket;
 
         public Engine(VirtualFunctionBus virtualFunctionBus)
             : base(virtualFunctionBus)
         {
-            //this.gasPedalValue = 
+            this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
+            this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
+            this.RPM = 0;
             this.enginePacket = new EnginePacket();
             virtualFunctionBus.ReadonlyEnginePacket = this.enginePacket;
         }
 
+        private int CalculateRPMChange() 
+        {
+            if (this.gasPedalValue != 0)
+            {
+                return (int)(this.gasPedalValue * GasPedalScaling);
+            }
+            else
+            {
+                return RPMReduction - (int)(this.breakPedalValue * BrakePedalScaling);
+            }
+        }
+
+        private void UpdateRPMValue() 
+        {
+            switch (this.CurrentGear)
+            {
+                case Gear.Park:
+                    this.RPM = 0;
+                    break;
+                case Gear.Neutral:
+                    this.RPM = BaseRPM;
+                    break;
+                case Gear.Drive:
+                    int tempRPM = this.RPM + this.CalculateRPMChange();
+                    if (tempRPM < MaxRPM)
+                    {
+                        if (tempRPM <= 0)
+                        {
+                            this.RPM = 0;
+                        }
+                        else
+                        {
+                            this.RPM = tempRPM;
+                        }
+                    }
+                    else
+                    {
+                        this.RPM = MaxRPM;
+                    }
+                    break;
+                case Gear.Reverse:
+                    break;
+            }
+        }
+
         public override void Process()
         {
-            throw new NotImplementedException();
+            this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
+            this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
+            this.UpdateRPMValue();
+            enginePacket.EngineRPM = this.RPM;
         }
     }
 }

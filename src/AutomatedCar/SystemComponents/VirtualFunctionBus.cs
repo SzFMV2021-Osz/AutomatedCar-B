@@ -11,6 +11,8 @@ namespace AutomatedCar.SystemComponents
         public IReadonlyPedalPacket ReadonlyPedalPacket;
         public IReadonlyVelocityPacket ReadonlyVelocityPacket;
 
+        public IReadonlyEnginePacket ReadonlyEnginePacket;
+
         public WorldObject Owner { get; }
 
         public VirtualFunctionBus(WorldObject owner)

@@ -32,7 +32,7 @@
         public double CalculateVelocity()
         {
             // TODO use other components
-            return this.virtualFunctionBus.ReadonlyPedalPacket.GasPedal * 0.2;
+            return this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM / 60;
         }
 
         /// <inheritdoc/>

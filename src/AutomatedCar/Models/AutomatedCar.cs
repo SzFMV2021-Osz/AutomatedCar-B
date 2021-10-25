@@ -17,6 +17,8 @@ namespace AutomatedCar.Models
 
         public Geometry Geometry { get; set; }
 
+        public Engine Engine { get; }
+
         /// <summary>
         /// Gets the busines loggic behind the car's pedals.
         /// </summary>
@@ -33,6 +35,7 @@ namespace AutomatedCar.Models
             this.VirtualFunctionBus = new VirtualFunctionBus(this);
             this.Pedals = new Pedals(this.VirtualFunctionBus);
             this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
+            this.Engine = new Engine(this.VirtualFunctionBus);
             this.ZIndex = 10;
         }
 
