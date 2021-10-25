@@ -42,9 +42,9 @@
                             </Grid>
                             <Separator Height="15"></Separator>
                             <TextBlock Text="Throttle"/>
-                            <ProgressBar Value="50"></ProgressBar>
+                            <ProgressBar Value="{Binding Pedals.Gas.Position}"></ProgressBar>
                             <TextBlock Text="Brake"/>
-                            <ProgressBar Value="50"></ProgressBar>
+                            <ProgressBar Value="{Binding Pedals.Brake.Position}"></ProgressBar>
                             <Separator Height="12"></Separator>
                             <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1">
                                 <Image Source="resm:AutomatedCar.Assets.steering-wheel.png?assembly=AutomatedCar"
