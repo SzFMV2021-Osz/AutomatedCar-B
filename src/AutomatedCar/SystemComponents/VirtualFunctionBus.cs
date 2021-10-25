@@ -3,17 +3,15 @@ namespace AutomatedCar.SystemComponents
     using AutomatedCar.SystemComponents.Packets;
     using AutomatedCar.Models;
     using System.Collections.Generic;
-    using SystemComponents.Packets;
 
     public class VirtualFunctionBus : GameBase
     {
         private List<SystemComponent> components = new List<SystemComponent>();
 
-
         public IReadonlyGearboxPacket GearboxPacket;
 
         public IReadonlyPedalPacket ReadonlyPedalPacket;
-        
+
         public IReadonlyVelocityPacket ReadonlyVelocityPacket;
 
         public WorldObject Owner { get; }

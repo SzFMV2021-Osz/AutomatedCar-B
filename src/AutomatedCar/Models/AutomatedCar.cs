@@ -39,7 +39,7 @@ namespace AutomatedCar.Models
 
             this.VirtualFunctionBus = new VirtualFunctionBus(this);
             this.Pedals = new Pedals(this.VirtualFunctionBus);
-            this.Gearbox = new AutomaticGearbox(this.virtualFunctionBus);
+            this.Gearbox = new AutomaticGearbox(this.VirtualFunctionBus);
             this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
             this.ZIndex = 10;
         }
