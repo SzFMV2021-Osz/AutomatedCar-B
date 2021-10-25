@@ -32,6 +32,12 @@ namespace AutomatedCar.Models
 
         private int wheel;
 
+        public int wheelPosition
+        {
+            get => this.wheel;
+            set => this.RaiseAndSetIfChanged(ref this.wheel, value);
+        }
+        
         private VirtualFunctionBus virtualFunctionBus;
 
 
