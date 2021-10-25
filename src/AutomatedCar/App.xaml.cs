@@ -1,3 +1,7 @@
+// <copyright file="App.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace AutomatedCar
 {
     using System.Collections.Generic;

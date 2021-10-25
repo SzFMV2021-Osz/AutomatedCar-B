@@ -34,9 +34,7 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.SL.RotateSteeringWheelLeft();
             }
-            Assert.Equal(expected, AutCar.Steering.SL.WheelPosition);
         }
 
         [Theory]
