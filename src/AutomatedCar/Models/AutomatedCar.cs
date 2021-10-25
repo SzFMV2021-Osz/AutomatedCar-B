@@ -1,40 +1,53 @@
 namespace AutomatedCar.Models
 {
+    using System;
+    using System.Threading;
+    using Avalonia;
     using Avalonia.Media;
     using global::AutomatedCar.SystemComponents;
     using global::AutomatedCar.SystemComponents.Behaviour;
+    using global::AutomatedCar.SystemComponents.Packets;
+    using ReactiveUI;
 
     public class AutomatedCar : Car
     {
-        private VirtualFunctionBus virtualFunctionBus;
+        public VirtualFunctionBus VirtualFunctionBus { get; }
 
-        public AutomatedCar(int x, int y, string filename)
-            : base(x, y, filename)
-        {
-            this.virtualFunctionBus = new VirtualFunctionBus();
-            this.Gearbox = new AutomaticGearbox(this.virtualFunctionBus);
-            this.ZIndex = 10;
-        }
+        public int Revolution { get; set; }
 
-        public VirtualFunctionBus VirtualFunctionBus { get => this.virtualFunctionBus; }
+        public Geometry Geometry { get; set; }
 
+        /// <summary>
+        /// Gets the busines loggic behind the car's pedals.
+        /// </summary>
+        public Pedals Pedals { get; }
+        
         /// <summary>
         /// Gets the automated car's gearbox.
         /// </summary>
         public IGearbox Gearbox { get; }
 
-        public int Revolution { get; set; }
-
-        public int Velocity { get; set; }
-
-        public Geometry Geometry { get; set; }
 
         /// <summary>
-        /// Starts the automated car by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.
+        /// Gets the busines logic of the car's movement.
         /// </summary>
+        public VelocityVectorCalculator VelocityVectorCalculator { get; }
+
+        public AutomatedCar(int x, int y, string filename)
+            : base(x, y, filename)
+        {
+
+            this.VirtualFunctionBus = new VirtualFunctionBus(this);
+            this.Pedals = new Pedals(this.VirtualFunctionBus);
+            this.Gearbox = new AutomaticGearbox(this.virtualFunctionBus);
+            this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
+            this.ZIndex = 10;
+        }
+
+        /// <summary>Starts the automated cor by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
         public void Start()
         {
-            this.virtualFunctionBus.Start();
+            this.VirtualFunctionBus.Start();
         }
 
         /// <summary>
@@ -42,7 +55,7 @@ namespace AutomatedCar.Models
         /// </summary>
         public void Stop()
         {
-            this.virtualFunctionBus.Stop();
+            this.VirtualFunctionBus.Stop();
         }
     }
 }
