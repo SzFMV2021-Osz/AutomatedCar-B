@@ -1,3 +1,7 @@
+// <copyright file="App.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 namespace AutomatedCar
 {
     using System.Collections.Generic;
@@ -37,6 +41,9 @@ namespace AutomatedCar
                 var geom = new PolylineGeometry(points, false);
 
                 var world = World.Instance;
+
+                Game game = new Game(world);
+                game.Start();
 
                 world.PopulateFromJSON($"AutomatedCar.Assets.test_world.json");
 
