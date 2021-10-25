@@ -53,7 +53,7 @@
                                        Height="90"
                                        Width="90">
                                     <Image.RenderTransform>
-                                       <RotateTransform Angle="{Binding wheelPosition}" />
+                                        <RotateTransform Angle="{Binding VirtualFunctionBus.SteeringPacket.WheelPosition}" />
                                     </Image.RenderTransform>
                                 </Image>
                             </WrapPanel>
@@ -67,7 +67,7 @@
                                 <TextBlock Grid.Row="3" Grid.Column="0">Rotation:</TextBlock>
                                 <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Rotation}"/>
                                 <TextBlock Grid.Row="4" Grid.Column="0">Wheel:</TextBlock>
-                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding wheelPosition}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding VirtualFunctionBus.SteeringPacket.WheelPosition}"/>
                             </Grid>
                         </StackPanel>
                     </DataTemplate>
