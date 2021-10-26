@@ -1,10 +1,9 @@
-﻿namespace AutomatedCar.SystemComponents.Behaviour
+﻿// <copyright file="EngineRPM.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace AutomatedCar.SystemComponents.Behaviour
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using ReactiveUI;
 
     public class EngineRPM : ReactiveObject
