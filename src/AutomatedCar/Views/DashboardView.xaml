@@ -46,12 +46,18 @@
                             <TextBlock Text="Brake"/>
                             <ProgressBar Value="{Binding Pedals.Brake.Position}"></ProgressBar>
                             <Separator Height="12"></Separator>
-                            <Image
-                                Width="90" Height="90"
-                                Source="resm:AutomatedCar.Assets.steering-wheel.png?assembly=AutomatedCar"
-                                RenderTransformOrigin="{Binding RotationPoint, Converter={x:Static visualization:RenderTransformOriginTransformer.Instance}}">
-                            </Image>
-                            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                            <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Grid.Row="0" Grid.Column="1">
+                                <Image Source="resm:AutomatedCar.Assets.steering-wheel.png?assembly=AutomatedCar"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Bottom"
+                                       Height="90"
+                                       Width="90">
+                                    <Image.RenderTransform>
+                                        <RotateTransform Angle="{Binding VirtualFunctionBus.SteeringPacket.WheelPosition}" />
+                                    </Image.RenderTransform>
+                                </Image>
+                            </WrapPanel>
+                            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                                 <TextBlock Grid.Row="0" Grid.Column="0">X:</TextBlock>
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding X}"/>
                                 <TextBlock Grid.Row="1" Grid.Column="0">Y:</TextBlock>
@@ -60,6 +66,8 @@
                                 <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Filename}"/>
                                 <TextBlock Grid.Row="3" Grid.Column="0">Rotation:</TextBlock>
                                 <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Rotation}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0">Wheel:</TextBlock>
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding VirtualFunctionBus.SteeringPacket.WheelPosition}"/>
                             </Grid>
                         </StackPanel>
                     </DataTemplate>
