@@ -13,8 +13,8 @@
             this.virtualFunctionBus.SteeringPacket = this.packet;
         }
 
-        private static int WHEEL_MIN = -60;
-        private static int WHEEL_MAX = 60;
+        private static int WHEEL_MIN = -100;
+        private static int WHEEL_MAX = 100;
 
         private int wheel;
 

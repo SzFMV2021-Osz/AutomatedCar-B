@@ -63,11 +63,11 @@ namespace AutomatedCar.Models
         {
             var velocity = this.VirtualFunctionBus.ReadonlyVelocityPacket.Velocity;
             var wheel = this.VirtualFunctionBus.SteeringPacket.WheelPosition;
+            double steerRadius = 130 / Math.Tan(wheel*60/100 * (Math.PI / 180));
+            double temp = velocity * 20 / steerRadius;
 
             if (velocity != 0 && wheel != 0)
             {
-                double steerRadius = 130 / Math.Tan(wheel * (Math.PI / 180));
-                double temp = velocity * 20 / steerRadius;
                 this.Rotation += temp;
             }
 
