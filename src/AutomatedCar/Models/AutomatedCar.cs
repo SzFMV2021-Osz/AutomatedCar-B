@@ -91,13 +91,9 @@ namespace AutomatedCar.Models
             this.VirtualFunctionBus.Start();
         }
 
-<<<<<<< HEAD
-        /// <summary>Stops the automated car by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
-=======
         /// <summary>
         /// Stops the automated car by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.
         /// </summary>
->>>>>>> main
         public void Stop()
         {
             this.VirtualFunctionBus.Stop();
