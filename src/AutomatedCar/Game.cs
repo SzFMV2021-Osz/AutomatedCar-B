@@ -87,6 +87,18 @@ namespace AutomatedCar
             {
                 this.world.DebugStatus.Rotate = !this.world.DebugStatus.Rotate;
             }
+
+            if (Keyboard.IsKeyDown(Key.W))
+            {
+                this.world.ControlledCar.Gearbox.ManualShiftUp();
+                Keyboard.Keys.Remove(Key.W);
+            }
+
+            if (Keyboard.IsKeyDown(Key.S))
+            {
+                this.world.ControlledCar.Gearbox.ManualShiftDown();
+                Keyboard.Keys.Remove(Key.S);
+            }
         }
 
     }
