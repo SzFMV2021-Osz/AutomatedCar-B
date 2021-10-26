@@ -22,8 +22,17 @@ namespace AutomatedCar.Models
         /// </summary>
         public VelocityVectorCalculator VelocityVectorCalculator { get; }
 
+        /// <summary>
+        /// Gets the business logic of the car's steering.
+        /// </summary>
         public Steering Steering { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutomatedCar"/> class.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="filename"></param>
         public AutomatedCar(int x, int y, string filename)
                     : base(x, y, filename)
         {

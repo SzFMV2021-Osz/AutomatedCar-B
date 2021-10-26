@@ -40,17 +40,17 @@ namespace AutomatedCar
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
-                World.Instance.ControlledCar.Steering.SL.RotateSteeringWheelLeft();
+                World.Instance.ControlledCar.Steering.RotateSteeringWheelLeft();
             }
 
             if (Keyboard.IsKeyDown(Key.Right))
             {
-                World.Instance.ControlledCar.Steering.SL.RotateSteeringWheelRight();
+                World.Instance.ControlledCar.Steering.RotateSteeringWheelRight();
             }
 
             if (!Keyboard.IsKeyDown(Key.Left) && !Keyboard.IsKeyDown(Key.Right))
             {
-                World.Instance.ControlledCar.Steering.SL.ReleaseSteeringWheel();
+                World.Instance.ControlledCar.Steering.ReleaseSteeringWheel();
             }
 
             if (Keyboard.IsKeyDown(Key.PageUp))
