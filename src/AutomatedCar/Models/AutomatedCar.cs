@@ -1,13 +1,8 @@
 namespace AutomatedCar.Models
 {
-    using System;
-    using System.Threading;
-    using Avalonia;
     using Avalonia.Media;
     using global::AutomatedCar.SystemComponents;
     using global::AutomatedCar.SystemComponents.Behaviour;
-    using global::AutomatedCar.SystemComponents.Packets;
-    using ReactiveUI;
 
     public class AutomatedCar : Car
     {
@@ -27,12 +22,15 @@ namespace AutomatedCar.Models
         /// </summary>
         public VelocityVectorCalculator VelocityVectorCalculator { get; }
 
+        public Steering Steering { get; }
+
         public AutomatedCar(int x, int y, string filename)
-            : base(x, y, filename)
+                    : base(x, y, filename)
         {
             this.VirtualFunctionBus = new VirtualFunctionBus(this);
             this.Pedals = new Pedals(this.VirtualFunctionBus);
             this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
+            this.Steering = new Steering(this.VirtualFunctionBus);
             this.ZIndex = 10;
         }
 

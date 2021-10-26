@@ -1,8 +1,8 @@
 namespace AutomatedCar.SystemComponents
 {
-    using AutomatedCar.Models;
     using System.Collections.Generic;
-    using SystemComponents.Packets;
+    using AutomatedCar.Models;
+    using AutomatedCar.SystemComponents.Packets;
 
     public class VirtualFunctionBus : GameBase
     {
@@ -10,6 +10,8 @@ namespace AutomatedCar.SystemComponents
 
         public IReadonlyPedalPacket ReadonlyPedalPacket;
         public IReadonlyVelocityPacket ReadonlyVelocityPacket;
+
+        public SteeringPacket SteeringPacket { get; set; }
 
         public WorldObject Owner { get; }
 
