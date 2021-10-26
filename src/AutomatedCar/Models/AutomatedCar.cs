@@ -56,13 +56,25 @@ namespace AutomatedCar.Models
             var velocity = this.VirtualFunctionBus.ReadonlyVelocityPacket.Velocity;
             var wheel = this.VirtualFunctionBus.SteeringPacket.WheelPosition;
 
-            this.deltaX = (-1) * Math.Cos((this.Rotation + 90) * (Math.PI / 180)) * velocity;
-            this.deltaY = (-1) * Math.Sin((this.Rotation + 90) * (Math.PI / 180)) * velocity;
+            if (velocity != 0 && wheel != 0)
+            {
+                double steerRadius = (130 / Math.Tan(wheel)) + 90;
+                double temp = velocity / steerRadius;
+                if ((wheel > 0 && velocity > 0) || (wheel < 0 && velocity < 0))
+                {
+                    this.Rotation++;
+                }
+                else
+                {
+                    this.Rotation--;
+                }
+            }
 
-            double steerRadius = (130 * Math.Tan(wheel)) + 90;
+            this.deltaX = Math.Sin(this.Rotation * (Math.PI / 180)) * velocity;
+            this.deltaY = Math.Cos(this.Rotation * (Math.PI / 180)) * velocity;
 
             this.X += (int)this.deltaX;
-            this.Y += (int)this.deltaY;
+            this.Y -= (int)this.deltaY;
         }
 
         /// <summary>Starts the automated car by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>

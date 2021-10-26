@@ -37,7 +37,6 @@ namespace AutomatedCar
                 World.Instance.ControlledCar.Pedals.Brake.Decrease(4);
             }
 
-
             if (Keyboard.IsKeyDown(Key.Left))
             {
                 World.Instance.ControlledCar.Steering.RotateSteeringWheelLeft();
