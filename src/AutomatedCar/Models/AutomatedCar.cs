@@ -1,13 +1,8 @@
 namespace AutomatedCar.Models
 {
-    using System;
-    using System.Threading;
-    using Avalonia;
     using Avalonia.Media;
     using global::AutomatedCar.SystemComponents;
     using global::AutomatedCar.SystemComponents.Behaviour;
-    using global::AutomatedCar.SystemComponents.Packets;
-    using ReactiveUI;
 
     public class AutomatedCar : Car
     {
@@ -23,19 +18,29 @@ namespace AutomatedCar.Models
         /// Gets the busines loggic behind the car's pedals.
         /// </summary>
         public Pedals Pedals { get; }
+        
+        /// <summary>
+        /// Gets the automated car's gearbox.
+        /// </summary>
+        public IGearbox Gearbox { get; }
+
 
         /// <summary>
         /// Gets the busines logic of the car's movement.
         /// </summary>
         public VelocityVectorCalculator VelocityVectorCalculator { get; }
 
+        public Steering Steering { get; }
+
         public AutomatedCar(int x, int y, string filename)
-            : base(x, y, filename)
+                    : base(x, y, filename)
         {
+
             this.VirtualFunctionBus = new VirtualFunctionBus(this);
             this.Pedals = new Pedals(this.VirtualFunctionBus);
+            this.Gearbox = new AutomaticGearbox(this.VirtualFunctionBus);
             this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
-            this.Engine = new Engine(this.VirtualFunctionBus);
+            this.Steering = new Steering(this.VirtualFunctionBus);
             this.ZIndex = 10;
         }
 
@@ -45,7 +50,9 @@ namespace AutomatedCar.Models
             this.VirtualFunctionBus.Start();
         }
 
-        /// <summary>Stops the automated cor by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
+        /// <summary>
+        /// Stops the automated car by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.
+        /// </summary>
         public void Stop()
         {
             this.VirtualFunctionBus.Stop();

@@ -40,12 +40,17 @@ namespace AutomatedCar
 
             if (Keyboard.IsKeyDown(Key.Left))
             {
-                this.world.ControlledCar.X -= 5;
+                World.Instance.ControlledCar.Steering.SL.RotateSteeringWheelLeft();
             }
 
             if (Keyboard.IsKeyDown(Key.Right))
             {
-                this.world.ControlledCar.X += 5;
+                World.Instance.ControlledCar.Steering.SL.RotateSteeringWheelRight();
+            }
+
+            if (!Keyboard.IsKeyDown(Key.Left) && !Keyboard.IsKeyDown(Key.Right))
+            {
+                World.Instance.ControlledCar.Steering.SL.ReleaseSteeringWheel();
             }
 
             if (Keyboard.IsKeyDown(Key.PageUp))
@@ -83,5 +88,6 @@ namespace AutomatedCar
                 this.world.DebugStatus.Rotate = !this.world.DebugStatus.Rotate;
             }
         }
+
     }
 }
