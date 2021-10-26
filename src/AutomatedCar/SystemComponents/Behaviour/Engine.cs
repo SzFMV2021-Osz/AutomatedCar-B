@@ -53,15 +53,30 @@ namespace AutomatedCar.SystemComponents.Behaviour
 
         private int UpdateRPMValue()
         {
+            int tempRPM;
+
             switch (this.currentGear)
             {
                 case Gear.Park:
                 case Gear.Neutral:
-                    this.rpm.RPM = BaseRPM;
+                    tempRPM = this.rpm.RPM + this.CalculateRPMChange();
+                    if (tempRPM <= BaseRPM)
+                    {
+                        this.rpm.RPM = BaseRPM;
+                    }
+                    else if (tempRPM >= MaxRPM)
+                    {
+                        this.rpm.RPM = MaxRPM;
+                    }
+                    else
+                    {
+                        this.rpm.RPM = tempRPM;
+                    }
+
                     return 0;
                 case Gear.Drive:
                 case Gear.Reverse:
-                    int tempRPM = this.rpm.RPM + this.CalculateRPMChange();
+                    tempRPM = this.rpm.RPM + this.CalculateRPMChange();
                     if (tempRPM < MaxRPM)
                     {
                         if (tempRPM <= BaseRPM)
@@ -76,13 +91,19 @@ namespace AutomatedCar.SystemComponents.Behaviour
                         {
                             this.rpm.RPM = tempRPM;
                         }
+
+                        return (int)this.rpm.RPM;
                     }
+
+                    this.rpm.RPM = MaxRPM;
 
                     return (int)this.rpm.RPM;
                 default:
                     return 0;
             }
         }
+
+        public EngineRPM RPM { get => this.rpm; }
 
         public override void Process()
         {
