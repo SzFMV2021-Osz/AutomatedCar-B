@@ -4,7 +4,6 @@
 
     public class Steering : SystemComponent
     {
-
         private SteeringPacket packet { get; }
 
         public Steering(VirtualFunctionBus virtualFunctionBus)

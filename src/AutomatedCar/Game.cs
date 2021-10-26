@@ -87,7 +87,8 @@ namespace AutomatedCar
             {
                 this.world.DebugStatus.Rotate = !this.world.DebugStatus.Rotate;
             }
-        }
 
+            this.world.ControlledCar.CalculateNextPosition();
+        }
     }
 }
