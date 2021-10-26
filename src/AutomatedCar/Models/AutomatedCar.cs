@@ -66,16 +66,9 @@ namespace AutomatedCar.Models
 
             if (velocity != 0 && wheel != 0)
             {
-                double steerRadius = (130 / Math.Tan(wheel)) + 90;
-                double temp = velocity / steerRadius;
-                if ((wheel > 0 && velocity > 0) || (wheel < 0 && velocity < 0))
-                {
-                    this.Rotation++;
-                }
-                else
-                {
-                    this.Rotation--;
-                }
+                double steerRadius = 130 / Math.Tan(wheel * (Math.PI / 180));
+                double temp = velocity * 20 / steerRadius;
+                this.Rotation += temp;
             }
 
             this.deltaX = Math.Sin(this.Rotation * (Math.PI / 180)) * velocity;
@@ -91,13 +84,9 @@ namespace AutomatedCar.Models
             this.VirtualFunctionBus.Start();
         }
 
-<<<<<<< HEAD
-        /// <summary>Stops the automated car by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
-=======
         /// <summary>
         /// Stops the automated car by stopping the ticker in the Virtual Function Bus, that cyclically calls the system components.
         /// </summary>
->>>>>>> main
         public void Stop()
         {
             this.VirtualFunctionBus.Stop();
