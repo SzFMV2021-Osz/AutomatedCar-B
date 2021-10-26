@@ -11,6 +11,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
     using System.Threading.Tasks;
     using AutomatedCar.SystemComponents.Packets;
     using AutomatedCar.SystemComponents.Behaviour;
+    using ReactiveUI;
 
     public class Engine : SystemComponent
     {
@@ -22,7 +23,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
 
         private double gasPedalValue; // Gázpedál állásának tárolása
         private double breakPedalValue; // Fékpedál állásának tárolása
-        private int RPM;
+        private EngineRPM rpm;
         private Gear CurrentGear;
         private EnginePacket enginePacket;
 
@@ -32,16 +33,24 @@ namespace AutomatedCar.SystemComponents.Behaviour
             this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
             this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
             this.CurrentGear = Gear.Drive;
-            this.RPM = 0;
+            this.rpm = new EngineRPM();
+            this.rpm.RPM = BaseRPM;
             this.enginePacket = new EnginePacket();
             virtualFunctionBus.ReadonlyEnginePacket = this.enginePacket;
         }
 
-        private int CalculateRPMChange() 
+        private int CalculateRPMChange()
         {
             if (this.gasPedalValue != 0)
             {
-                return (int)(this.gasPedalValue * GasPedalScaling);
+                if (this.breakPedalValue == 0)
+                {
+                    return (int)(this.gasPedalValue * PedalScaling);
+                }
+                else
+                {
+                    return (int)(this.breakPedalValue * PedalScaling) * -1;
+                }
             }
             else
             {
@@ -81,6 +90,8 @@ namespace AutomatedCar.SystemComponents.Behaviour
                     break;
             }
         }
+
+        public EngineRPM RPM { get => this.rpm; }
 
         public override void Process()
         {
