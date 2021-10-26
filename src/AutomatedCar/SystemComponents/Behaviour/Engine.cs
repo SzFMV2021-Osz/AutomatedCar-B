@@ -17,7 +17,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
     {
         private const int MaxRPM = 7000; // Maximálisan megengedett fordulatszám
         private const int BaseRPM = 500; // Naggyáboli alapjárati érték
-        private const double GasPedalScaling = 0.2;
+        private const double PedalScaling = 0.2;
         private const double BrakePedalScaling = 5;
         private const int RPMReduction = -50;
 
@@ -32,7 +32,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         {
             this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
             this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
-            this.CurrentGear = Gear.Drive;
+            this.CurrentGear = Gear.Park;
             this.rpm = new EngineRPM();
             this.rpm.RPM = BaseRPM;
             this.enginePacket = new EnginePacket();
@@ -58,36 +58,94 @@ namespace AutomatedCar.SystemComponents.Behaviour
             }
         }
 
-        private void UpdateRPMValue() 
+        private int UpdateRPMValue()
         {
             switch (this.CurrentGear)
             {
                 case Gear.Park:
-                    this.RPM = 0;
-                    break;
+                    this.rpm.RPM = BaseRPM;
+                    return 0;
                 case Gear.Neutral:
-                    this.RPM = BaseRPM;
-                    break;
+                    this.rpm.RPM = BaseRPM;
+                    return 0;
                 case Gear.Drive:
-                    int tempRPM = this.RPM + this.CalculateRPMChange();
-                    if (tempRPM < MaxRPM)
+                    if (this.breakPedalValue == 0)
                     {
-                        if (tempRPM <= 0)
+                        int tempRPM = this.rpm.RPM + this.CalculateRPMChange();
+                        if (tempRPM < MaxRPM)
                         {
-                            this.RPM = 0;
+                            if (tempRPM <= BaseRPM)
+                            {
+                                this.rpm.RPM = BaseRPM;
+                            }
+                            else
+                            {
+                                this.rpm.RPM = tempRPM;
+                            }
                         }
                         else
                         {
-                            this.RPM = tempRPM;
+                            this.rpm.RPM = MaxRPM;
                         }
                     }
                     else
                     {
-                        this.RPM = MaxRPM;
+                        int tempRPM = this.rpm.RPM + this.CalculateRPMChange();
+                        if (tempRPM < MaxRPM)
+                        {
+                            if (tempRPM <= BaseRPM)
+                            {
+                                this.rpm.RPM = BaseRPM;
+                                return 0;
+                            }
+                            else
+                            {
+                                this.rpm.RPM = tempRPM;
+                            }
+                        }
                     }
-                    break;
+
+                    return this.rpm.RPM;
                 case Gear.Reverse:
-                    break;
+                    if (this.breakPedalValue == 0)
+                    {
+                        int tempRPM = this.rpm.RPM + this.CalculateRPMChange();
+                        if (tempRPM < MaxRPM)
+                        {
+                            if (tempRPM <= BaseRPM)
+                            {
+                                this.rpm.RPM = BaseRPM;
+                            }
+                            else
+                            {
+                                this.rpm.RPM = tempRPM;
+                            }
+                        }
+                        else
+                        {
+                            this.rpm.RPM = MaxRPM;
+                        }
+                    }
+                    else
+                    {
+                        int tempRPM = this.rpm.RPM + this.CalculateRPMChange();
+                        if (tempRPM < MaxRPM)
+                        {
+                            if (tempRPM <= BaseRPM)
+                            {
+                                this.rpm.RPM = BaseRPM;
+                                return 0;
+                            }
+                            else
+                            {
+                                this.rpm.RPM = tempRPM;
+                            }
+                        }
+                    }
+
+                    return (int)this.rpm.RPM;
+                default:
+                    return 0;
             }
         }
 
@@ -97,9 +155,9 @@ namespace AutomatedCar.SystemComponents.Behaviour
         {
             this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
             this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
-            this.CurrentGear = Gear.Drive;
-            this.UpdateRPMValue();
-            enginePacket.EngineRPM = this.RPM;
+            this.CurrentGear = Gear.Reverse;
+            int transmissionToRPM = this.UpdateRPMValue();
+            enginePacket.EngineRPM = transmissionToRPM;
         }
     }
 }
