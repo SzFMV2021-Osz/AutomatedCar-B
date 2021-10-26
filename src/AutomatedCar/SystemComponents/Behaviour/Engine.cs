@@ -10,10 +10,10 @@ namespace AutomatedCar.SystemComponents.Behaviour
     using System.Text;
     using System.Threading.Tasks;
     using AutomatedCar.SystemComponents.Packets;
+    using AutomatedCar.SystemComponents.Behaviour;
 
     public class Engine : SystemComponent
     {
-        private enum Gear {Park = 0, Reverse = 1, Neutral = 2, Drive = 3}
         private const int MaxRPM = 7000; // Maximálisan megengedett fordulatszám
         private const int BaseRPM = 500; // Naggyáboli alapjárati érték
         private const double GasPedalScaling = 0.2;
@@ -23,8 +23,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         private double gasPedalValue; // Gázpedál állásának tárolása
         private double breakPedalValue; // Fékpedál állásának tárolása
         private int RPM;
-        
-        private Gear CurrentGear = Gear.Drive; //TODO: Use Gearbox packet
+        private Gear CurrentGear;
         private EnginePacket enginePacket;
 
         public Engine(VirtualFunctionBus virtualFunctionBus)
@@ -32,6 +31,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         {
             this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
             this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
+            this.CurrentGear = Gear.Drive;
             this.RPM = 0;
             this.enginePacket = new EnginePacket();
             virtualFunctionBus.ReadonlyEnginePacket = this.enginePacket;
@@ -86,6 +86,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         {
             this.gasPedalValue = virtualFunctionBus.ReadonlyPedalPacket.GasPedal;
             this.breakPedalValue = virtualFunctionBus.ReadonlyPedalPacket.BrakePedal;
+            this.CurrentGear = Gear.Drive;
             this.UpdateRPMValue();
             enginePacket.EngineRPM = this.RPM;
         }

@@ -41,6 +41,7 @@ namespace AutomatedCar.Models
             this.Gearbox = new AutomaticGearbox(this.VirtualFunctionBus);
             this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
             this.Steering = new Steering(this.VirtualFunctionBus);
+            this.Engine = new Engine(this.VirtualFunctionBus);
             this.ZIndex = 10;
         }
 

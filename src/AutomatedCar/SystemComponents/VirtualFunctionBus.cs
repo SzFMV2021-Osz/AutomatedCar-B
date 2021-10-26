@@ -16,6 +16,8 @@ namespace AutomatedCar.SystemComponents
 
         public SteeringPacket SteeringPacket { get; set; }
 
+        public IReadonlyEnginePacket ReadonlyEnginePacket;
+
         public WorldObject Owner { get; }
 
         public VirtualFunctionBus(WorldObject owner)
