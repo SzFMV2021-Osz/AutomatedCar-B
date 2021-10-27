@@ -1,10 +1,6 @@
 ﻿namespace AutomatedCar.SystemComponents.Behaviour
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using AutomatedCar.SystemComponents.Packets;
 
     /// <summary>
@@ -32,7 +28,7 @@
         public double CalculateVelocity()
         {
             // TODO use other components
-            return this.virtualFunctionBus.ReadonlyPedalPacket.GasPedal * 0.2;
+            return (this.virtualFunctionBus.ReadonlyPedalPacket.GasPedal - this.virtualFunctionBus.ReadonlyPedalPacket.BrakePedal) * 0.2;
         }
 
         /// <inheritdoc/>
@@ -41,7 +37,7 @@
             this.packet.Velocity = this.CalculateVelocity();
 
             // TODO this is stupid
-            ((Models.AutomatedCar)this.virtualFunctionBus.Owner).Y -= Convert.ToInt32(Math.Round(this.packet.Velocity));
+            //((Models.AutomatedCar)this.virtualFunctionBus.Owner).Y -= Convert.ToInt32(Math.Round(this.packet.Velocity));
         }
     }
 }

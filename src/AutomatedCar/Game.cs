@@ -37,20 +37,19 @@ namespace AutomatedCar
                 World.Instance.ControlledCar.Pedals.Brake.Decrease(4);
             }
 
-
             if (Keyboard.IsKeyDown(Key.Left))
             {
-                World.Instance.ControlledCar.Steering.SL.RotateSteeringWheelLeft();
+                World.Instance.ControlledCar.Steering.RotateSteeringWheelLeft();
             }
 
             if (Keyboard.IsKeyDown(Key.Right))
             {
-                World.Instance.ControlledCar.Steering.SL.RotateSteeringWheelRight();
+                World.Instance.ControlledCar.Steering.RotateSteeringWheelRight();
             }
 
             if (!Keyboard.IsKeyDown(Key.Left) && !Keyboard.IsKeyDown(Key.Right))
             {
-                World.Instance.ControlledCar.Steering.SL.ReleaseSteeringWheel();
+                World.Instance.ControlledCar.Steering.ReleaseSteeringWheel();
             }
 
             if (Keyboard.IsKeyDown(Key.PageUp))
@@ -99,7 +98,8 @@ namespace AutomatedCar
                 this.world.ControlledCar.Gearbox.ManualShiftDown();
                 Keyboard.Keys.Remove(Key.S);
             }
-        }
 
+            this.world.ControlledCar.CalculateNextPosition();
+        }
     }
 }

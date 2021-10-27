@@ -1,4 +1,5 @@
 using AutomatedCar.Models;
+using AutomatedCar.SystemComponents.Behaviour;
 using Xunit;
 
 namespace AutomatedCarTests.Models
@@ -17,9 +18,10 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.SL.RotateSteeringWheelRight();
+                AutCar.Steering.RotateSteeringWheelRight();
+                AutCar.Steering.Process();
             }
-            Assert.Equal(expected, AutCar.Steering.SL.WheelPosition);
+            Assert.Equal(expected, AutCar.VirtualFunctionBus.SteeringPacket.WheelPosition);
         }
 
         [Theory]
@@ -34,7 +36,10 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
+                AutCar.Steering.RotateSteeringWheelLeft();
+                AutCar.Steering.Process();
             }
+            Assert.Equal(expected, AutCar.VirtualFunctionBus.SteeringPacket.WheelPosition);
         }
 
         [Theory]
@@ -49,13 +54,15 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.SL.RotateSteeringWheelLeft();
+                AutCar.Steering.RotateSteeringWheelLeft();
+                AutCar.Steering.Process();
             }
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.SL.ReleaseSteeringWheel();
+                AutCar.Steering.ReleaseSteeringWheel();
+                AutCar.Steering.Process();
             }
-            Assert.Equal(0, AutCar.Steering.SL.WheelPosition);
+            Assert.Equal(0, AutCar.VirtualFunctionBus.SteeringPacket.WheelPosition);
         }
     }
 }
