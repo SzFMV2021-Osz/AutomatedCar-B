@@ -32,9 +32,8 @@
         public double CalculateVelocity()
         {
             // TODO use other components
-            double speed = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM / 60 * 0.0823;
-            this.Speed = speed * 0.675;
-            return speed;
+            return this.virtualFunctionBus.GearboxPacket.Torque;
+            //return this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM / 60 * 0.0823;
         }
 
         /// <inheritdoc/>

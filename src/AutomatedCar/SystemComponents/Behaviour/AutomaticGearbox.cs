@@ -68,11 +68,10 @@ namespace AutomatedCar.SystemComponents.Behaviour
                 case Gear.Park:
                     return 0;
                 case Gear.Reverse:
-                    return this.driveSubgearRatios[0];
                 case Gear.Neutral:
-                    return this.driveSubgearRatios[0];
+                    return this.driveSubgearRatios[0] * this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
                 case Gear.Drive:
-                    return this.driveSubgearRatios[this.DriveSubgear];
+                    return this.driveSubgearRatios[this.DriveSubgear] * this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
             }
 
             throw new Exception("Invalid gear");
@@ -100,7 +99,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         public void HandleAutomaticGearshift()
         {
             // TODO actually use motor's rev
-            int motorRev = 2500;
+            int motorRev = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
 
             if (motorRev >= MaxMotorRevolution)
             {
@@ -197,8 +196,8 @@ namespace AutomatedCar.SystemComponents.Behaviour
 
         public void subGearShift()
         {
-            // TODO actually use motor's rev
-            int motorRev = 2500;
+            int motorRev = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
+
             if (this.Gear == Gear.Drive)
             {
                 if (motorRev >= MaxMotorRevolution)
