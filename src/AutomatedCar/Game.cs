@@ -98,7 +98,6 @@ namespace AutomatedCar
                 this.world.ControlledCar.Gearbox.ManualShiftDown();
                 Keyboard.Keys.Remove(Key.S);
             }
-        }
 
             this.world.ControlledCar.CalculateNextPosition();
         }
