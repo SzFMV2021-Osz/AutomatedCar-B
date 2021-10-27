@@ -32,7 +32,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public const int MinMotorRevolution = 2000;
 
-        private List<double> driveSubgearRatios = new List<double>() { 0.0823, 0.0823, 0.1647, 0.2470, 0,3293, 0.4116 };
+        private double[] driveSubgearRatios = new double[] { 0.0823, 0.0823, 0.1647, 0.2470, 0.3293, 0.4116 };
 
         private GearboxPacket gearboxPacket;
 
