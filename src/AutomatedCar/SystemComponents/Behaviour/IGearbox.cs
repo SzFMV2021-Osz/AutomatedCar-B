@@ -40,5 +40,15 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         /// <returns>The multiplier of the gearbox.</returns>
         double GetGearboxTorgue();
+
+         /// <summary>
+        /// Shifts up one main gear.
+        /// </summary>
+        void ManualShiftUp();
+
+        /// <summary>
+        /// Shifts down one main gear.
+        /// </summary>
+        void ManualShiftDown();
     }
 }
