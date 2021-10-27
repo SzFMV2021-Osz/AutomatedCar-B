@@ -1,4 +1,3 @@
-using System;
 namespace AutomatedCar.Views
 {
     using AutomatedCar.Models;
@@ -39,6 +38,5 @@ namespace AutomatedCar.Views
             var offsetY = World.Instance.ControlledCar.Y - (scrollViewer.Viewport.Height / 2);
             scrollViewer.Offset = new Avalonia.Vector(offsetX, offsetY);
         }
-
     }
 }
