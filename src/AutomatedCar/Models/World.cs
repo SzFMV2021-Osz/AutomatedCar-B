@@ -8,11 +8,11 @@
     using System.Globalization;
     using System.IO;
     using System.Reflection;
+    using Avalonia.Media;
+    using Helpers;
     using Newtonsoft.Json;
     using ReactiveUI;
-    using Helpers;
     using Visualization;
-    using Avalonia.Media;
 
     public class World : ReactiveObject
     {
@@ -25,7 +25,6 @@
         public static World Instance { get; } = new World();
 
         public ObservableCollection<WorldObject> WorldObjects { get; } = new ObservableCollection<WorldObject>();
-
         public AutomatedCar ControlledCar
         {
             get => this.controlledCars[this.controlledCarPointer];

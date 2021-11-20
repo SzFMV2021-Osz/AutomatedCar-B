@@ -33,7 +33,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public const int MinMotorRevolution = 2000;
 
-        private double[] driveSubgearRatios = new double[] { 0.0823, 0.1647, 0.2470, 0.3293, 0.4116 };
+        private double[] driveSubgearRatios = new double[] { 0.0823, 0.0823, 0.1647, 0.2470, 0.3293, 0.4116 };
 
         private GearboxPacket gearboxPacket;
 
@@ -92,7 +92,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
             }
 
             this.gearboxPacket.Torque = this.GetGearboxTorgue();
-            this.gearboxPacket.DriveSubgear = this.DriveSubgear;
+            this.gearboxPacket.CurrentGear = this.Gear;
         }
 
         /// <summary>

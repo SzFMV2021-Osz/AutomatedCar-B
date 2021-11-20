@@ -22,13 +22,13 @@ namespace AutomatedCar.SystemComponents.Packets
         double Torque { get; }
 
         /// <summary>
-        /// Gets the subgear in drive mode.
-        /// </summary>
-        public int DriveSubgear { get; }
-
-        /// <summary>
         /// Gets the direction of the current gearshift. -1 if down, +1 if up, otherwise 0.
         /// </summary>
         public short ShiftDirection { get; }
+
+        /// <summary>
+        /// Gets the current gear.
+        /// </summary>
+        public Gear CurrentGear { get; }
     }
 }

@@ -20,9 +20,9 @@ namespace AutomatedCar.SystemComponents.Packets
         public double Torque { get; set; }
 
         /// <inheritdoc/>
-        public int DriveSubgear { get; set; }
+        public short ShiftDirection { get; set; }
 
         /// <inheritdoc/>
-        public short ShiftDirection { get; set; }
+        public Gear CurrentGear { get; set; }
     }
 }
