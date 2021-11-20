@@ -20,12 +20,11 @@ namespace AutomatedCar.Models
         /// Gets the busines loggic behind the car's pedals.
         /// </summary>
         public Pedals Pedals { get; }
-        
+
         /// <summary>
         /// Gets the automated car's gearbox.
         /// </summary>
         public IGearbox Gearbox { get; }
-
 
         /// <summary>
         /// Gets the busines logic of the car's movement.

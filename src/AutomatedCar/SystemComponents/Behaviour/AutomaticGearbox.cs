@@ -11,6 +11,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
     using System.Threading.Tasks;
     using AutomatedCar.SystemComponents.Packets;
     using global::AutomatedCar.SystemComponents;
+    using ReactiveUI;
 
     /// <summary>
     /// An automated gearbox implementation.
@@ -32,11 +33,13 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public const int MinMotorRevolution = 2000;
 
-        private List<double> driveSubgearRatios = new List<double>() { 0.0823, 0.0823, 0.1647, 0.2470, 0,3293, 0.4116 };
+        private List<double> driveSubgearRatios = new List<double>() { 0.0823, 0.0823, 0.1647, 0.2470, 0, 3293, 0.4116 };
 
         private GearboxPacket gearboxPacket;
 
         private bool selfDriveMode = false;
+        private Gear gear;
+        private int driveSubgear;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutomaticGearbox"/> class.
@@ -52,10 +55,10 @@ namespace AutomatedCar.SystemComponents.Behaviour
         }
 
         /// <inheritdoc/>
-        public Gear Gear { get; set; }
+        public Gear Gear { get => this.gear; set => this.RaiseAndSetIfChanged(ref this.gear, value); }
 
         /// <inheritdoc/>
-        public int DriveSubgear { get; set; }
+        public int DriveSubgear { get => this.driveSubgear; set => this.RaiseAndSetIfChanged(ref driveSubgear, value); }
 
         /// <inheritdoc/>
         public double GetGearboxTorgue()

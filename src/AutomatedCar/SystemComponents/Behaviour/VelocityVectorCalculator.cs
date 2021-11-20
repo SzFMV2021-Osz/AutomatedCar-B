@@ -2,6 +2,7 @@
 {
     using System;
     using AutomatedCar.SystemComponents.Packets;
+    using ReactiveUI;
 
     /// <summary>
     /// The logic behind the car's velocity.
@@ -9,6 +10,9 @@
     public class VelocityVectorCalculator : SystemComponent
     {
         private VelocityPacket packet;
+
+        private double speed;
+        public double Speed { get => this.speed; private set => this.RaiseAndSetIfChanged(ref this.speed, value); }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VelocityVectorCalculator"/> class.
@@ -28,7 +32,9 @@
         public double CalculateVelocity()
         {
             // TODO use other components
-            return this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM / 60 * 0.0823;
+            double speed = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM / 60 * 0.0823;
+            this.Speed = speed * 0.675;
+            return speed;
         }
 
         /// <inheritdoc/>
