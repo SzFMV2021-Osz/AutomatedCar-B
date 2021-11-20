@@ -31,9 +31,7 @@
         /// <returns>The velocity.</returns>
         public double CalculateVelocity()
         {
-            // TODO use other components
-            return this.virtualFunctionBus.GearboxPacket.Torque;
-            //return this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM / 60 * 0.0823;
+            return this.virtualFunctionBus.ReadonlyGearboxPacket.Torque / 50;
         }
 
         /// <inheritdoc/>

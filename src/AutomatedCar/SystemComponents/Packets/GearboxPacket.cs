@@ -23,6 +23,6 @@ namespace AutomatedCar.SystemComponents.Packets
         public int DriveSubgear { get; set; }
 
         /// <inheritdoc/>
-        public Gear Gear { get; set; }
+        public short ShiftDirection { get; set; }
     }
 }

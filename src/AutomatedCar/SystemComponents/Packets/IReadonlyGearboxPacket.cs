@@ -27,8 +27,8 @@ namespace AutomatedCar.SystemComponents.Packets
         public int DriveSubgear { get; }
 
         /// <summary>
-        /// Gets the gearbox's current gear.
+        /// Gets the direction of the current gearshift. -1 if down, +1 if up, otherwise 0.
         /// </summary>
-        public Gear Gear { get; }
+        public short ShiftDirection { get; }
     }
 }

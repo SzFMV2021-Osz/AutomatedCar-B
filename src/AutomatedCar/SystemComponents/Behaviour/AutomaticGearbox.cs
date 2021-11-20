@@ -51,7 +51,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
             this.Gear = Gear.Park;
             this.DriveSubgear = 0;
             this.gearboxPacket = new GearboxPacket();
-            virtualFunctionBus.GearboxPacket = this.gearboxPacket;
+            virtualFunctionBus.ReadonlyGearboxPacket = this.gearboxPacket;
         }
 
         /// <inheritdoc/>
@@ -80,16 +80,18 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// <inheritdoc/>
         public override void Process()
         {
-            if (selfDriveMode)
+            this.gearboxPacket.ShiftDirection = 0;
+
+            if (this.selfDriveMode)
             {
                 this.HandleAutomaticGearshift();
             }
             else
             {
-                this.subGearShift();
+                this.SubGearShift();
             }
+
             this.gearboxPacket.Torque = this.GetGearboxTorgue();
-            this.gearboxPacket.Gear = this.Gear;
             this.gearboxPacket.DriveSubgear = this.DriveSubgear;
         }
 
@@ -98,7 +100,6 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public void HandleAutomaticGearshift()
         {
-            // TODO actually use motor's rev
             int motorRev = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
 
             if (motorRev >= MaxMotorRevolution)
@@ -134,6 +135,8 @@ namespace AutomatedCar.SystemComponents.Behaviour
                 case Gear.Park:
                     break;
             }
+
+            this.gearboxPacket.ShiftDirection = -1;
         }
 
         /// <inheritdoc/>
@@ -151,7 +154,12 @@ namespace AutomatedCar.SystemComponents.Behaviour
                     this.Gear = Gear.Drive;
                     break;
                 case Gear.Drive:
-                    this.DriveSubgear = Math.Min(this.DriveSubgear + 1, MaxDriveSubgears);
+                    if (this.DriveSubgear < MaxDriveSubgears)
+                    {
+                        this.DriveSubgear++;
+                        this.gearboxPacket.ShiftDirection = +1;
+                    }
+
                     break;
             }
         }
@@ -194,19 +202,21 @@ namespace AutomatedCar.SystemComponents.Behaviour
             }
         }
 
-        public void subGearShift()
+        public void SubGearShift()
         {
             int motorRev = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
 
             if (this.Gear == Gear.Drive)
             {
-                if (motorRev >= MaxMotorRevolution)
+                if (motorRev >= MaxMotorRevolution && this.DriveSubgear < MaxDriveSubgears)
                 {
-                    this.DriveSubgear = Math.Min(this.DriveSubgear + 1, MaxDriveSubgears);
+                    this.DriveSubgear++;
+                    this.gearboxPacket.ShiftDirection = +1;
                 }
-                else if (motorRev <= MinMotorRevolution)
+                else if (motorRev <= MinMotorRevolution && this.DriveSubgear > 0)
                 {
-                    this.DriveSubgear = Math.Max(this.DriveSubgear - 1, 0);
+                    this.DriveSubgear--;
+                    this.gearboxPacket.ShiftDirection = -1;
                 }
             }
         }
