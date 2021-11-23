@@ -4,20 +4,24 @@ namespace AutomatedCar.Views
     using Avalonia.Controls;
     using Avalonia.Input;
     using Avalonia.Markup.Xaml;
+    using Avalonia.Threading;
+    using System;
 
     public class MainWindow : Window
     {
+        private readonly DispatcherTimer timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 10) };
+
         public MainWindow()
         {
             this.InitializeComponent();
-            FocusCar();
+            this.timer.Tick += delegate { this.FocusCar(); };
+            this.timer.IsEnabled = true;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             Keyboard.Keys.Add(e.Key);
             base.OnKeyDown(e);
-            FocusCar();
         }
 
         protected override void OnKeyUp(KeyEventArgs e)

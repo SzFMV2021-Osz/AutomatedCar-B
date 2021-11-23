@@ -33,7 +33,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public const int MinMotorRevolution = 2000;
 
-        private List<double> driveSubgearRatios = new List<double>() { 0.0823, 0.0823, 0.1647, 0.2470, 0, 3293, 0.4116 };
+        private double[] driveSubgearRatios = new double[] { 0.0823, 0.0823, 0.1647, 0.2470, 0.3293, 0.4116 };
 
         private GearboxPacket gearboxPacket;
 
@@ -51,7 +51,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
             this.Gear = Gear.Park;
             this.DriveSubgear = 0;
             this.gearboxPacket = new GearboxPacket();
-            virtualFunctionBus.GearboxPacket = this.gearboxPacket;
+            virtualFunctionBus.ReadonlyGearboxPacket = this.gearboxPacket;
         }
 
         /// <inheritdoc/>
@@ -68,11 +68,10 @@ namespace AutomatedCar.SystemComponents.Behaviour
                 case Gear.Park:
                     return 0;
                 case Gear.Reverse:
-                    return this.driveSubgearRatios[0];
                 case Gear.Neutral:
-                    return this.driveSubgearRatios[0];
+                    return this.driveSubgearRatios[0] * this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
                 case Gear.Drive:
-                    return this.driveSubgearRatios[this.DriveSubgear];
+                    return this.driveSubgearRatios[this.DriveSubgear] * this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
             }
 
             throw new Exception("Invalid gear");
@@ -81,17 +80,19 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// <inheritdoc/>
         public override void Process()
         {
-            if (selfDriveMode)
+            this.gearboxPacket.ShiftDirection = 0;
+
+            if (this.selfDriveMode)
             {
                 this.HandleAutomaticGearshift();
             }
             else
             {
-                this.subGearShift();
+                this.SubGearShift();
             }
+
             this.gearboxPacket.Torque = this.GetGearboxTorgue();
-            this.gearboxPacket.Gear = this.Gear;
-            this.gearboxPacket.DriveSubgear = this.DriveSubgear;
+            this.gearboxPacket.CurrentGear = this.Gear;
         }
 
         /// <summary>
@@ -99,8 +100,7 @@ namespace AutomatedCar.SystemComponents.Behaviour
         /// </summary>
         public void HandleAutomaticGearshift()
         {
-            // TODO actually use motor's rev
-            int motorRev = 2500;
+            int motorRev = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
 
             if (motorRev >= MaxMotorRevolution)
             {
@@ -135,6 +135,8 @@ namespace AutomatedCar.SystemComponents.Behaviour
                 case Gear.Park:
                     break;
             }
+
+            this.gearboxPacket.ShiftDirection = -1;
         }
 
         /// <inheritdoc/>
@@ -152,7 +154,12 @@ namespace AutomatedCar.SystemComponents.Behaviour
                     this.Gear = Gear.Drive;
                     break;
                 case Gear.Drive:
-                    this.DriveSubgear = Math.Min(this.DriveSubgear + 1, MaxDriveSubgears);
+                    if (this.DriveSubgear < MaxDriveSubgears)
+                    {
+                        this.DriveSubgear++;
+                        this.gearboxPacket.ShiftDirection = +1;
+                    }
+
                     break;
             }
         }
@@ -195,19 +202,21 @@ namespace AutomatedCar.SystemComponents.Behaviour
             }
         }
 
-        public void subGearShift()
+        public void SubGearShift()
         {
-            // TODO actually use motor's rev
-            int motorRev = 2500;
+            int motorRev = this.virtualFunctionBus.ReadonlyEnginePacket.EngineRPM;
+
             if (this.Gear == Gear.Drive)
             {
-                if (motorRev >= MaxMotorRevolution)
+                if (motorRev >= MaxMotorRevolution && this.DriveSubgear < MaxDriveSubgears)
                 {
-                    this.DriveSubgear = Math.Min(this.DriveSubgear + 1, MaxDriveSubgears);
+                    this.DriveSubgear++;
+                    this.gearboxPacket.ShiftDirection = +1;
                 }
-                else if (motorRev <= MinMotorRevolution)
+                else if (motorRev <= MinMotorRevolution && this.DriveSubgear > 0)
                 {
-                    this.DriveSubgear = Math.Max(this.DriveSubgear - 1, 0);
+                    this.DriveSubgear--;
+                    this.gearboxPacket.ShiftDirection = -1;
                 }
             }
         }
