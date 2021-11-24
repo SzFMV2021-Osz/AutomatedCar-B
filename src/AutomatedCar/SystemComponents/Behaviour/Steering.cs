@@ -21,7 +21,7 @@
         /// <summary>
         /// Rotates the steering wheel left.
         /// </summary>
-        public void RotateSteeringWheelLeft(int value = 1)
+        public void RotateSteeringWheelLeft(int value = 5)
         {
             if (this.wheel - value >= WHEEL_MIN)
             {
@@ -32,7 +32,7 @@
         /// <summary>
         /// Rotates the steering wheel right.
         /// </summary>
-        public void RotateSteeringWheelRight(int value = 1)
+        public void RotateSteeringWheelRight(int value = 5)
         {
             if (this.wheel + value <= WHEEL_MAX)
             {

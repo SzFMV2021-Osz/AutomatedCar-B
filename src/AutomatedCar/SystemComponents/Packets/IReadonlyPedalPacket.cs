@@ -8,6 +8,6 @@
 
     public interface IReadonlyVelocityPacket
     {
-        double Velocity { get; }
+        double Speed { get; }
     }
 }
