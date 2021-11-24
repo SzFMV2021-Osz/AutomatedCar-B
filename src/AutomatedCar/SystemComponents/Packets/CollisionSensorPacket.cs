@@ -5,7 +5,7 @@ namespace AutomatedCar.SystemComponents.Packets
     /// <summary>
     /// Stores the collision detection packet data.
     /// </summary>
-    public class CollisionSensor : ReactiveObject, IReadonlyCollisionSensorPacket
+    public class CollisionSensorPacket : ReactiveObject, IReadonlyCollisionSensorPacket
     {
         
     }
