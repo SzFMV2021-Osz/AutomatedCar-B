@@ -22,6 +22,8 @@ namespace AutomatedCar.SystemComponents
 
         public CameraPacket CameraPacket { get; set; }
 
+        public IReadonlyCollisionSensorPacket CollisionSensorPacket { get; set; }
+
         public WorldObject Owner { get; }
 
         public VirtualFunctionBus(WorldObject owner)
