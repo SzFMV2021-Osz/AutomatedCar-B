@@ -26,6 +26,10 @@
 
         public ObservableCollection<WorldObject> WorldObjects { get; } = new ObservableCollection<WorldObject>();
 
+        //Ádám
+        public CollisonEventHandler OnCollideWithLandmark;
+        public CollisonEventHandler OnCollideWithNPC;
+
         public AutomatedCar ControlledCar
         {
             get => this.controlledCars[this.controlledCarPointer];
@@ -346,6 +350,91 @@
             geom.CloseFigure();
 
             return geom;
+        }
+
+
+        //Ádám
+        private static double GetArea(Point a, Point b, Point c)
+        {
+            return Math.Abs(((a.X * (b.Y - c.Y)) +
+                             (b.X * (c.Y - a.Y)) +
+                             (c.X * (a.Y - b.Y))) / 2.0);
+        }
+        private static bool IsInside(List<Point> triangle, Point target)
+        {
+            Point a = triangle[0];
+            Point b = triangle[1];
+            Point c = triangle[2];
+
+            /* Calculate area of triangle ABC */
+            double areaFull = GetArea(a, b, c);
+
+            /* Calculate area of triangle PBC */
+            double area1 = GetArea(target, b, c);
+
+            /* Calculate area of triangle PAC */
+            double area2 = GetArea(a, target, c);
+
+            /* Calculate area of triangle PAB */
+            double area3 = GetArea(a, b, target);
+
+            double dummy = (area1 + area2 + area3);
+
+            /* Check if sum of A1, A2 and A3 is same as A */
+            return areaFull == (area1 + area2 + area3);
+        }
+        public List<WorldObject> GetWorldObjectsInsideTriangle(List<Point> pointsOfTriangle)
+        {
+            var coordinatePoints = new Coordinate[pointsOfTriangle.Count + 1];
+            for (int i = 0; i < pointsOfTriangle.Count; i++)
+            {
+                coordinatePoints[i] = new Coordinate(pointsOfTriangle[i].X, pointsOfTriangle[i].Y);
+            }
+
+            coordinatePoints[coordinatePoints.Length - 1] = new Coordinate(pointsOfTriangle[0].X, pointsOfTriangle[0].Y);
+            var lr1 = new LinearRing(new CoordinateArraySequence(coordinatePoints), GeometryFactory.Default);
+            NetTopologySuite.Geometries.Polygon triangle = new NetTopologySuite.Geometries.Polygon(lr1);
+
+            List<WorldObject> objectsInside = new List<WorldObject>();
+
+            foreach (WorldObject item in this.WorldObjects)
+            {
+                if (!(item is AutomatedCar))
+                {
+                    foreach (LineString polygon in item.NetPolygons)
+                    {
+                        if (triangle.Intersects(polygon))
+                        {
+                            objectsInside.Add(item);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return objectsInside;
+        }
+        public void IsColisonWhitWorldObject()
+        {
+            foreach (WorldObject item in this.WorldObjects.Where(x => x.IsColliding))
+            {
+                foreach (NetTopologySuite.Geometries.LineString worldObjectpolygon in item.NetPolygons)
+                {
+                    foreach (NetTopologySuite.Geometries.LineString carPolygon in this._controlledCar.NetPolygons)
+                    {
+                        if (worldObjectpolygon.Intersects(carPolygon))
+                        {
+                            if (item.Collideable)
+                            {
+                                //Mi a különbség NPc és Landmark között?
+                                //OnCollideWithNPC?.Invoke(item);
+                                OnCollideWithLandmark?.Invoke(item);
+
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
