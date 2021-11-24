@@ -1,10 +1,10 @@
 namespace AutomatedCar.Models
 {
+    using System;
     using Avalonia.Media;
     using global::AutomatedCar.SystemComponents;
     using global::AutomatedCar.SystemComponents.Behaviour;
-    using System;
-    using System.Numerics;
+    using global::AutomatedCar.SystemComponents.Sensors;
 
     public class AutomatedCar : Car
     {
@@ -20,12 +20,11 @@ namespace AutomatedCar.Models
         /// Gets the busines loggic behind the car's pedals.
         /// </summary>
         public Pedals Pedals { get; }
-        
+
         /// <summary>
         /// Gets the automated car's gearbox.
         /// </summary>
         public IGearbox Gearbox { get; }
-
 
         /// <summary>
         /// Gets the busines logic of the car's movement.
@@ -36,6 +35,8 @@ namespace AutomatedCar.Models
         /// Gets the business logic of the car's steering.
         /// </summary>
         public Steering Steering { get; }
+
+        public Camera Camera { get; private set; }
 
         private double deltaX;
 
@@ -50,13 +51,13 @@ namespace AutomatedCar.Models
         public AutomatedCar(int x, int y, string filename)
                     : base(x, y, filename)
         {
-
             this.VirtualFunctionBus = new VirtualFunctionBus(this);
             this.Pedals = new Pedals(this.VirtualFunctionBus);
             this.Gearbox = new AutomaticGearbox(this.VirtualFunctionBus);
             this.Engine = new Engine(this.VirtualFunctionBus);
             this.VelocityVectorCalculator = new VelocityVectorCalculator(this.VirtualFunctionBus);
             this.Steering = new Steering(this.VirtualFunctionBus);
+            this.Camera = new Camera(this.VirtualFunctionBus);
             this.ZIndex = 10;
             this.deltaX = 0;
             this.deltaY = 0;
@@ -79,6 +80,11 @@ namespace AutomatedCar.Models
 
             this.X += (int)this.deltaX;
             this.Y -= (int)this.deltaY;
+        }
+
+        public void SetSensors()
+        {
+            this.Camera.RelativeLocation = new Avalonia.Point(this.Geometry.Bounds.Center.X, this.Geometry.Bounds.Center.Y / 2);
         }
 
         /// <summary>Starts the automated car by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
