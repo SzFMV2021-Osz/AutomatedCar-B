@@ -53,6 +53,7 @@ namespace AutomatedCar
                 controlledCar.Geometries = new ObservableCollection<PolylineGeometry>();
                 controlledCar.Geometries.Add(new PolylineGeometry(new List<Point> { new Point(36, 240), new Point(36, 180) }, false));
                 controlledCar.Geometries.Add(new PolylineGeometry(new List<Point> { new Point(72, 240), new Point(72, 180) }, false));
+                controlledCar.SetCamera();
                 controlledCar.SetRadar();
                 world.AddControlledCar(controlledCar);
                 controlledCar.Start();
