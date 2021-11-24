@@ -45,6 +45,8 @@ namespace AutomatedCar.Models
 
         public Camera Camera { get; private set; }
 
+        public CollisionSensor CollisionSensor { get; private set; }
+
         private double deltaX;
 
         private double deltaY;
@@ -67,6 +69,7 @@ namespace AutomatedCar.Models
             this.Steering = new Steering(this.VirtualFunctionBus);
             this.Camera = new Camera(this.VirtualFunctionBus);
             this.Radar = new Radar(this.VirtualFunctionBus);
+            this.CollisionSensor = new CollisionSensor(this.VirtualFunctionBus);
             this.ZIndex = 10;
             this.deltaX = 0;
             this.deltaY = 0;
