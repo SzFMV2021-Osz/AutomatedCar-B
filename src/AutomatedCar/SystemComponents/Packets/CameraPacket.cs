@@ -17,6 +17,7 @@ namespace AutomatedCar.SystemComponents.Packets
         public CameraPacket()
         {
             this.Roads = new List<WorldObject>();
+            this.ObjectsInArea = new List<WorldObject>();
         }
 
         public IList<WorldObject> Roads

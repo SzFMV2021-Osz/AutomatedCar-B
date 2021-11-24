@@ -50,7 +50,14 @@ namespace AutomatedCar.SystemComponents.Sensors
 
         private void GetObjectsInTriangle()
         {
-            this.camPacket.ObjectsInArea = World.Instance.WorldObjects;
+            Point carPoint = new (World.Instance.ControlledCar.X, World.Instance.ControlledCar.Y);
+            foreach (var item in World.Instance.WorldObjects)
+            {
+                if (Math.Sqrt(Math.Pow(carPoint.X - item.X, 2) + Math.Pow(carPoint.Y - item.Y, 2)) <= this.distance)
+                {
+                    this.camPacket.ObjectsInArea.Add(item);
+                }
+            }
         }
 
         private void FilterRoads()
