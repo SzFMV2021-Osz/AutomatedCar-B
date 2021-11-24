@@ -18,7 +18,7 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.RotateSteeringWheelRight();
+                AutCar.Steering.RotateSteeringWheelRight(1);
                 AutCar.Steering.Process();
             }
             Assert.Equal(expected, AutCar.VirtualFunctionBus.SteeringPacket.WheelPosition);
@@ -36,7 +36,7 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.RotateSteeringWheelLeft();
+                AutCar.Steering.RotateSteeringWheelLeft(1);
                 AutCar.Steering.Process();
             }
             Assert.Equal(expected, AutCar.VirtualFunctionBus.SteeringPacket.WheelPosition);
@@ -54,7 +54,7 @@ namespace AutomatedCarTests.Models
             AutomatedCar.Models.AutomatedCar AutCar = new AutomatedCar.Models.AutomatedCar(x, y, filename);
             for (int i = 0; i < rotation; i++)
             {
-                AutCar.Steering.RotateSteeringWheelLeft();
+                AutCar.Steering.RotateSteeringWheelLeft(1);
                 AutCar.Steering.Process();
             }
             for (int i = 0; i < rotation; i++)

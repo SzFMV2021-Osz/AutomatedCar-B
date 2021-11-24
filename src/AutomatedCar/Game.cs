@@ -2,6 +2,7 @@ namespace AutomatedCar
 {
     using System;
     using AutomatedCar.Models;
+    using AutomatedCar.Views;
     using Avalonia.Input;
 
     public class Game : GameBase
@@ -85,6 +86,24 @@ namespace AutomatedCar
             if (Keyboard.IsKeyDown(Key.D5))
             {
                 this.world.DebugStatus.Rotate = !this.world.DebugStatus.Rotate;
+            }
+
+            if (Keyboard.IsKeyDown(Key.F1))
+            {
+                new HelpWindow().Show();
+                Keyboard.Keys.Remove(Key.F1);
+            }
+
+            if (Keyboard.IsKeyDown(Key.F5))
+            {
+                World.Instance.NextControlledCar();
+                Keyboard.Keys.Remove(Key.F5);
+            }
+
+            if (Keyboard.IsKeyDown(Key.F6))
+            {
+                World.Instance.PrevControlledCar();
+                Keyboard.Keys.Remove(Key.F5);
             }
 
             if (Keyboard.IsKeyDown(Key.W))

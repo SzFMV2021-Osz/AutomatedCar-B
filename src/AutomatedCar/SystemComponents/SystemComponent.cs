@@ -1,6 +1,8 @@
+using ReactiveUI;
+
 namespace AutomatedCar.SystemComponents
 {
-    public abstract class SystemComponent
+    public abstract class SystemComponent : ReactiveObject
     {
         protected VirtualFunctionBus virtualFunctionBus;
 

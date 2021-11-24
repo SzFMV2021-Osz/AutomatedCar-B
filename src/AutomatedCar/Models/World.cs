@@ -8,14 +8,15 @@
     using System.Globalization;
     using System.IO;
     using System.Reflection;
+    using Avalonia.Media;
+    using Helpers;
     using Newtonsoft.Json;
     using ReactiveUI;
-    using Helpers;
     using Visualization;
-    using Avalonia.Media;
 
     public class World : ReactiveObject
     {
+        private int lastId = 0;
         // private static readonly System.Lazy<World> lazySingleton = new System.Lazy<World> (() => new World());
         // public static World Instance { get { return lazySingleton.Value; } }
 
@@ -25,7 +26,6 @@
         public static World Instance { get; } = new World();
 
         public ObservableCollection<WorldObject> WorldObjects { get; } = new ObservableCollection<WorldObject>();
-
         public AutomatedCar ControlledCar
         {
             get => this.controlledCars[this.controlledCarPointer];
@@ -154,6 +154,12 @@
 
                 this.AddObject(wo);
             }
+        }
+
+        public int GetNextId()
+        {
+            this.lastId++;
+            return this.lastId;
         }
 
         private List<System.Drawing.PointF> ToDotNetPoints(Avalonia.Points points)

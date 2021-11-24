@@ -12,17 +12,27 @@ namespace AutomatedCar.Models
 
         private double rotation;
 
+        private bool highlighted;
+
         public WorldObject(int x, int y, string filename, int zindex = 1, bool collideable = false, WorldObjectType worldObjectType = WorldObjectType.Other)
         {
+            this.highlighted = false;
             this.X = x;
             this.Y = y;
             this.Filename = filename;
             this.ZIndex = zindex;
             this.Collideable = collideable;
             this.WorldObjectType = worldObjectType;
+            this.Id = World.Instance.GetNextId();
         }
 
         public int ZIndex { get; set; }
+
+        public bool Highlighted
+        {
+            get => this.highlighted;
+            set => this.RaiseAndSetIfChanged(ref this.highlighted, value);
+        }
 
         public double Rotation
         {
@@ -41,6 +51,8 @@ namespace AutomatedCar.Models
             get => this.y;
             set => this.RaiseAndSetIfChanged(ref this.y, value);
         }
+
+        public int Id { get; private set; }
 
         public Point RotationPoint { get; set; }
 

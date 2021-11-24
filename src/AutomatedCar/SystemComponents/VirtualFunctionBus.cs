@@ -8,7 +8,7 @@ namespace AutomatedCar.SystemComponents
     {
         private List<SystemComponent> components = new List<SystemComponent>();
 
-        public IReadonlyGearboxPacket GearboxPacket;
+        public IReadonlyGearboxPacket ReadonlyGearboxPacket;
 
         public IReadonlyPedalPacket ReadonlyPedalPacket;
 
@@ -16,7 +16,11 @@ namespace AutomatedCar.SystemComponents
 
         public IReadonlyVelocityPacket ReadonlyVelocityPacket;
 
+        public IRadarPacket RadarPacket;
+
         public SteeringPacket SteeringPacket { get; set; }
+
+        public CameraPacket CameraPacket { get; set; }
 
         public WorldObject Owner { get; }
 
