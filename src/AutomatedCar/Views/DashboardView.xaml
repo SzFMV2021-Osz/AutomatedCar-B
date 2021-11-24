@@ -74,10 +74,8 @@
                                 <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Rotation}"/>
                                 <TextBlock Grid.Row="4" Grid.Column="0">Wheel:</TextBlock>
                                 <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding VirtualFunctionBus.SteeringPacket.WheelPosition}"/>
-                                <TextBlock Grid.Row="5" Grid.Column="0">ClosestX:</TextBlock>
-                                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding VirtualFunctionBus.CameraPacket.ClosestObject.X}"/>
-                                <TextBlock Grid.Row="6" Grid.Column="0">ClosestY:</TextBlock>
-                                <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding VirtualFunctionBus.CameraPacket.ClosestObject.Y}"/>
+                                <TextBlock Grid.Row="5" Grid.Column="0">ClosestFileName:</TextBlock>
+                                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding VirtualFunctionBus.CameraPacket.ClosestObject.Filename}"/>
                               </Grid>
                         </StackPanel>
                     </DataTemplate>

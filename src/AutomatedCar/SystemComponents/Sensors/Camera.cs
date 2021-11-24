@@ -71,11 +71,10 @@ namespace AutomatedCar.SystemComponents.Sensors
             WorldObject closestObject = null;
             double minDistance = double.MaxValue;
             IList<WorldObject> worldObjects = this.camPacket.ObjectsInArea.ToList();
-            worldObjects.Remove(World.Instance.ControlledCar);
             foreach (WorldObject currObject in worldObjects)
             {
                 double currDistance = Math.Sqrt(Math.Pow(carPoint.X - currObject.X, 2) + Math.Pow(carPoint.Y - currObject.Y, 2));
-                if (currDistance < minDistance)
+                if (currDistance < minDistance && currDistance != 0)
                 {
                     minDistance = currDistance;
                     closestObject = currObject;
