@@ -32,10 +32,12 @@ namespace AutomatedCar.SystemComponents.Sensors
                         if (item.WorldObjectType is WorldObjectType.Car || item.WorldObjectType is WorldObjectType.Predestrian)
                         {
                             Console.WriteLine($"Collision: NPC");
+                            this.collisionSensorPacket.CollisionType = CollisionType.NPC;
                         }
                         else
                         {
                             Console.WriteLine($"Collision: Object");
+                            this.collisionSensorPacket.CollisionType = CollisionType.Object;
                         }
                     }
                 }
