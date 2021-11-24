@@ -16,8 +16,9 @@ namespace AutomatedCar.SystemComponents
 
         public IReadonlyVelocityPacket ReadonlyVelocityPacket;
 
-        public SteeringPacket SteeringPacket { get; set; }
+        public IRadarPacket RadarPacket;
 
+        public SteeringPacket SteeringPacket { get; set; }
         public WorldObject Owner { get; }
 
         public VirtualFunctionBus(WorldObject owner)
