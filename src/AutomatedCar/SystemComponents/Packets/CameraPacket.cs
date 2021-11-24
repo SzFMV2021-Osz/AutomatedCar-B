@@ -11,6 +11,8 @@ namespace AutomatedCar.SystemComponents.Packets
     public class CameraPacket : ReactiveObject
     {
         private IList<WorldObject> roads;
+        private IList<WorldObject> objectsInArea;
+        private WorldObject closestObject;
 
         public CameraPacket()
         {
@@ -21,6 +23,18 @@ namespace AutomatedCar.SystemComponents.Packets
         {
             get => this.roads;
             set => this.RaiseAndSetIfChanged(ref this.roads, value);
+        }
+
+        public IList<WorldObject> ObjectsInArea
+        {
+            get => this.objectsInArea;
+            set => this.RaiseAndSetIfChanged(ref this.objectsInArea, value);
+        }
+
+        public WorldObject ClosestObject
+        {
+            get => this.closestObject;
+            set => this.RaiseAndSetIfChanged(ref this.closestObject, value);
         }
     }
 }

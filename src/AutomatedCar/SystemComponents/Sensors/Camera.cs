@@ -11,7 +11,7 @@ namespace AutomatedCar.SystemComponents.Sensors
     using AutomatedCar.SystemComponents.Packets;
     using Avalonia;
 
-    public class Camera
+    public class Camera : SystemComponent
     {
         private int distance;
         private int angle;
@@ -20,12 +20,13 @@ namespace AutomatedCar.SystemComponents.Sensors
         public Point RelativeLocation { get; set; }
 
         public Camera(VirtualFunctionBus virtualFunctionBus, int angle = 60, int distance = 80)
+            : base(virtualFunctionBus)
         {
             this.camPacket = new CameraPacket();
             virtualFunctionBus.CameraPacket = this.camPacket;
 
             this.angle = angle;
-            this.distance = distance;
+            this.distance = distance * 10; // 240 px ~= 4,5 m ==> * 53
         }
 
         public IList<Point> Points
@@ -47,9 +48,42 @@ namespace AutomatedCar.SystemComponents.Sensors
             return points;
         }
 
-        private void FilterRoads(IList<WorldObject> worldObjects)
+        private void GetObjectsInTriangle()
         {
-            this.camPacket.Roads = worldObjects.Where(ro => ro.WorldObjectType == WorldObjectType.Road).ToList();
+            this.camPacket.ObjectsInArea = World.Instance.WorldObjects;
+        }
+
+        private void FilterRoads()
+        {
+            this.camPacket.Roads = this.camPacket.ObjectsInArea.Where(ro => ro.WorldObjectType == WorldObjectType.Road).ToList();
+        }
+
+        private void GetClosest()
+        {
+            Point carPoint = new (World.Instance.ControlledCar.X, World.Instance.ControlledCar.Y);
+            WorldObject closestObject = null;
+            double minDistance = double.MaxValue;
+            IList<WorldObject> worldObjects = this.camPacket.ObjectsInArea.ToList();
+            worldObjects.Remove(World.Instance.ControlledCar);
+            foreach (WorldObject currObject in worldObjects)
+            {
+                double currDistance = Math.Sqrt(Math.Pow(carPoint.X - currObject.X, 2) + Math.Pow(carPoint.Y - currObject.Y, 2));
+                if (currDistance < minDistance)
+                {
+                    minDistance = currDistance;
+                    closestObject = currObject;
+                }
+            }
+
+            this.camPacket.ClosestObject = closestObject;
+            this.camPacket.ClosestObject.Highlighted = true;
+        }
+
+        public override void Process()
+        {
+            this.GetObjectsInTriangle();
+            this.FilterRoads();
+            this.GetClosest();
         }
     }
 }

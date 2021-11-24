@@ -12,8 +12,11 @@ namespace AutomatedCar.Models
 
         private double rotation;
 
+        private bool highlighted;
+
         public WorldObject(int x, int y, string filename, int zindex = 1, bool collideable = false, WorldObjectType worldObjectType = WorldObjectType.Other)
         {
+            this.highlighted = false;
             this.X = x;
             this.Y = y;
             this.Filename = filename;
@@ -23,6 +26,12 @@ namespace AutomatedCar.Models
         }
 
         public int ZIndex { get; set; }
+
+        public bool Highlighted
+        {
+            get => this.highlighted;
+            set => this.RaiseAndSetIfChanged(ref this.highlighted, value);
+        }
 
         public double Rotation
         {
