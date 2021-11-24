@@ -16,6 +16,8 @@ namespace AutomatedCar.SystemComponents
 
         public IReadonlyVelocityPacket ReadonlyVelocityPacket;
 
+        public IRadarPacket RadarPacket;
+
         public SteeringPacket SteeringPacket { get; set; }
 
         public CameraPacket CameraPacket { get; set; }

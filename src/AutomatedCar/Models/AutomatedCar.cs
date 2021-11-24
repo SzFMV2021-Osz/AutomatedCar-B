@@ -5,6 +5,8 @@ namespace AutomatedCar.Models
     using global::AutomatedCar.SystemComponents;
     using global::AutomatedCar.SystemComponents.Behaviour;
     using global::AutomatedCar.SystemComponents.Sensors;
+    using System;
+    using System.Numerics;
 
     public class AutomatedCar : Car
     {
@@ -36,6 +38,11 @@ namespace AutomatedCar.Models
         /// </summary>
         public Steering Steering { get; }
 
+        /// <summary>
+        /// Gets radar class repository.
+        /// </summary>
+        public Radar Radar { get; private set; }
+
         public Camera Camera { get; private set; }
 
         private double deltaX;
@@ -51,6 +58,7 @@ namespace AutomatedCar.Models
         public AutomatedCar(int x, int y, string filename)
                     : base(x, y, filename)
         {
+
             this.VirtualFunctionBus = new VirtualFunctionBus(this);
             this.Pedals = new Pedals(this.VirtualFunctionBus);
             this.Gearbox = new AutomaticGearbox(this.VirtualFunctionBus);
@@ -58,6 +66,7 @@ namespace AutomatedCar.Models
             this.SpeedCalculator = new SpeedCalculator(this.VirtualFunctionBus);
             this.Steering = new Steering(this.VirtualFunctionBus);
             this.Camera = new Camera(this.VirtualFunctionBus);
+            this.Radar = new Radar(this.VirtualFunctionBus);
             this.ZIndex = 10;
             this.deltaX = 0;
             this.deltaY = 0;
@@ -82,7 +91,12 @@ namespace AutomatedCar.Models
             this.Y -= (int)this.deltaY;
         }
 
-        public void SetSensors()
+        public void SetRadar()
+        {
+            this.Radar.RelativeLocation = new Avalonia.Point(this.Geometry.Bounds.TopRight.X / 2, this.Geometry.Bounds.TopRight.Y);
+        }
+
+        public void SetCamera()
         {
             this.Camera.RelativeLocation = new Avalonia.Point(this.Geometry.Bounds.Center.X, this.Geometry.Bounds.Center.Y / 2);
         }
