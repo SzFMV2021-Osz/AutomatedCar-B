@@ -16,6 +16,7 @@
 
     public class World : ReactiveObject
     {
+        private int lastId = 0;
         // private static readonly System.Lazy<World> lazySingleton = new System.Lazy<World> (() => new World());
         // public static World Instance { get { return lazySingleton.Value; } }
 
@@ -153,6 +154,12 @@
 
                 this.AddObject(wo);
             }
+        }
+
+        public int GetNextId()
+        {
+            this.lastId++;
+            return this.lastId;
         }
 
         private List<System.Drawing.PointF> ToDotNetPoints(Avalonia.Points points)

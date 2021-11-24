@@ -20,6 +20,7 @@ namespace AutomatedCar.Models
             this.ZIndex = zindex;
             this.Collideable = collideable;
             this.WorldObjectType = worldObjectType;
+            this.Id = World.Instance.GetNextId();
         }
 
         public int ZIndex { get; set; }
@@ -41,6 +42,8 @@ namespace AutomatedCar.Models
             get => this.y;
             set => this.RaiseAndSetIfChanged(ref this.y, value);
         }
+
+        public int Id { get; private set; }
 
         public Point RotationPoint { get; set; }
 
