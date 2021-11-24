@@ -3,6 +3,7 @@ namespace AutomatedCar.Models
     using Avalonia.Media;
     using global::AutomatedCar.SystemComponents;
     using global::AutomatedCar.SystemComponents.Behaviour;
+    using global::AutomatedCar.SystemComponents.Sensors;
     using System;
     using System.Numerics;
 
@@ -36,6 +37,11 @@ namespace AutomatedCar.Models
         /// </summary>
         public Steering Steering { get; }
 
+        /// <summary>
+        /// Gets radar class repository.
+        /// </summary>
+        public Radar Radar { get; private set; }
+
         private double deltaX;
 
         private double deltaY;
@@ -56,6 +62,7 @@ namespace AutomatedCar.Models
             this.Engine = new Engine(this.VirtualFunctionBus);
             this.SpeedCalculator = new SpeedCalculator(this.VirtualFunctionBus);
             this.Steering = new Steering(this.VirtualFunctionBus);
+            this.Radar = new Radar(this.VirtualFunctionBus);
             this.ZIndex = 10;
             this.deltaX = 0;
             this.deltaY = 0;
@@ -78,6 +85,11 @@ namespace AutomatedCar.Models
 
             this.X += (int)this.deltaX;
             this.Y -= (int)this.deltaY;
+        }
+
+        public void SetRadar()
+        {
+            this.Radar.RelativeLocation = new Avalonia.Point(this.Geometry.Bounds.TopRight.X / 2, this.Geometry.Bounds.TopRight.Y);
         }
 
         /// <summary>Starts the automated car by starting the ticker in the Virtual Function Bus, that cyclically calls the system components.</summary>
