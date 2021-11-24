@@ -7,10 +7,13 @@ namespace AutomatedCar.SystemComponents.Sensors
     using Avalonia.Media;
     using AutomatedCar.SystemComponents.Packets;
     using AutomatedCar.Models;
+    using MsgBox;
 
     public class CollisionSensor : SystemComponent
     {
         private CollisionSensorPacket collisionSensorPacket;
+
+        private int messageShown = 0;
 
         public CollisionSensor(VirtualFunctionBus virtualFunctionBus)
             : base(virtualFunctionBus)
@@ -19,7 +22,7 @@ namespace AutomatedCar.SystemComponents.Sensors
             virtualFunctionBus.CollisionSensorPacket = collisionSensorPacket;
         }
 
-        public override void Process()
+        public async override void Process()
         {
             AutomatedCar car = World.Instance.ControlledCar;
 
@@ -33,11 +36,22 @@ namespace AutomatedCar.SystemComponents.Sensors
                         {
                             Console.WriteLine($"Collision: NPC");
                             this.collisionSensorPacket.CollisionType = CollisionType.NPC;
+                            if(messageShown == 0)
+                            {
+                                messageShown = 1;
+                                await MessageBox.Show("Collision: NPC", "GameOver", MessageBox.MessageBoxButtons.Ok).ContinueWith(task => {messageShown = 0;});
+                            }
+                            
                         }
                         else
                         {
                             Console.WriteLine($"Collision: Object");
                             this.collisionSensorPacket.CollisionType = CollisionType.Object;
+                            if(messageShown == 0)
+                            {
+                                messageShown = 1;
+                                await MessageBox.Show("Collision: Object", "GameOver", MessageBox.MessageBoxButtons.Ok).ContinueWith(task => {messageShown = 0;});
+                            }
                         }
                     }
                 }
